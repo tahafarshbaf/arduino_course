@@ -1,0 +1,77 @@
+site_name: Hands on Arduino!
+site_description: Beginner Arduino programming course — Shahid Rajaei University
+site_url: https://tahafarshbaf.github.io/arduino_course/
+repo_url: https://github.com/tahafarshbaf/arduino_course
+repo_name: tahafarshbaf/arduino_course
+edit_uri: edit/main/
+
+docs_dir: docs
+site_dir: site
+
+nav:
+  - Home: index.md
+  - Lectures:
+      - Introduction: Lectures/01-Introduction.md
+      - C Overview: Lectures/02-C Overview.md
+      - Blink: Lectures/03-Blink.md
+      - Potentiometer: Lectures/04-Potentiometer.md
+      - Fire Alarm System: Lectures/05-Fire Alarm System.md
+      - Servo: Lectures/06-Servo.md
+      - Security System: Lectures/07-Security System.md
+      - Tank Level Control: Lectures/08-Tank Level Control.md
+      - Speed Measurement: Lectures/09-SpeedMeasurement.md
+      - References: Lectures/Refrences.md
+
+theme:
+  name: material
+  language: en
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: orange
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: orange
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - callouts
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/tahafarshbaf/arduino_course

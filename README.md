@@ -7,27 +7,19 @@ A from-scratch, project-based path into embedded systems: starting from "what is
 
 ## 📖 Lectures
 
-Each lecture lives in [`01 Lectures/`](./01%20Lectures) and builds directly on the one before it.
+Each lecture lives in [`Lectures/`](./Lectures) and builds directly on the one before it.
 
 | # | Lecture | What it covers |
 |---|---|---|
-| 01 | [Introduction](<./01 Lectures/01-Introduction.md>) | Arduino's history, the Uno R3 board, the ATmega328P microcontroller |
-| 02 | [C Overview](<./01 Lectures/02-C Overview.md>) | Variables, loops, conditionals, functions — the language fundamentals |
-| 03 | [Blink](<./01 Lectures/03-Blink.md>) | Your first program: digital output, `pinMode`, `digitalWrite` |
-| 04 | [Potentiometer](<./01 Lectures/04-Potentiometer.md>) | Analog input, `analogRead`, mapping values |
-| 05 | [Fire Alarm System](<./01 Lectures/05-Fire%20Alarm%20System.md>) | Sensors, thresholds, conditional logic in a real project |
-| 06 | [Servo](<./01 Lectures/06-Servo.md>) | PWM signals and controlling a servo motor |
-| 07 | [Security System](<./01 Lectures/07-Security%20System.md>) | Putting it all together — sensors, logic, and actuation in one build |
-| 08 | [Tank Level Control](<./01 Lectures/08-Tank Level Control.md>) | Enums, state machines, and cleaner control-flow patterns |
-| 09 | [Speed Measurement](<./01 Lectures/09-SpeedMeasurement.md>) | Enums, state machines, and cleaner control-flow patterns |
-
-<br/>
-
-## 📝 Assignments
-
-Practice problems live in [`02 Assignments/`](./02%20Assignments). These lean on the C fundamentals from Lecture 02 — series, number theory, numerical approximation — to build programming muscle before it gets applied to hardware.
-
-- [HW01](<./02 Assignments/HW01.md>) — factorial series, Armstrong numbers, Goldbach's conjecture, prime/perfect number checks, and Taylor series approximations (π and sine)
+| 01 | [Introduction](<./Lectures/01-Introduction.md>) | Arduino's history, the Uno R3 board, the ATmega328P microcontroller |
+| 02 | [C Overview](<./Lectures/02-C Overview.md>) | Variables, loops, conditionals, functions — the language fundamentals |
+| 03 | [Blink](<./Lectures/03-Blink.md>) | Your first program: digital output, `pinMode`, `digitalWrite` |
+| 04 | [Potentiometer](<./Lectures/04-Potentiometer.md>) | Analog input, `analogRead`, mapping values |
+| 05 | [Fire Alarm System](<./Lectures/05-Fire%20Alarm%20System.md>) | Sensors, thresholds, conditional logic in a real project |
+| 06 | [Servo](<./Lectures/06-Servo.md>) | PWM signals and controlling a servo motor |
+| 07 | [Security System](<./Lectures/07-Security%20System.md>) | Putting it all together — sensors, logic, and actuation in one build |
+| 08 | [Tank Level Control](<./Lectures/08-Tank Level Control.md>) | Enums, state machines, and cleaner control-flow patterns |
+| 09 | [Speed Measurement](<./Lectures/09-SpeedMeasurement.md>) | Hardware interrupts, `attachInterrupt()`, ISRs, and the `volatile` keyword |
 
 <br/>
 
@@ -69,7 +61,7 @@ No local setup needed to start writing C:
 ## 🛠️ Getting Started
 
 1. Pick a compiler or simulator from above (Wokwi is the easiest starting point — no installs, no hardware required).
-2. Read [Lecture 01](<./01 Lectures/01-Introduction.md>) and work through the syllabus in order.
+2. Read [Lecture 01](<./Lectures/01-Introduction.md>) and work through the syllabus in order.
 
 <br/>
 

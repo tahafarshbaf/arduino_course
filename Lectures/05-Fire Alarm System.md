@@ -197,7 +197,7 @@ Button  leg2 ───── GND
 
 ### Button Wiring: Pull-Down Resistor
 
-![pullup](/01%20Lectures/Images/pullup.png)
+![pullup](Images/pullup.png)
 
 We wire the button with a **pull-down resistor** (10 kΩ to 5V):
 
