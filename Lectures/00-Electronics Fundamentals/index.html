@@ -1,0 +1,1778 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner Arduino programming course — Shahid Rajaei University">
+      
+      
+      
+        <link rel="canonical" href="https://tahafarshbaf.github.io/arduino_course/Lectures/00-Electronics%20Fundamentals/">
+      
+      
+        <link rel="prev" href="../../Pre-Course/02-Practice-Problems/">
+      
+      
+        <link rel="next" href="../01-Introduction/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Electronics Fundamentals - Hands on Arduino!</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lecture-00-electronics-fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hands on Arduino!" class="md-header__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hands on Arduino!
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Electronics Fundamentals
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Pre-Course/00-Welcome/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Pre-Course
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Lectures
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hands on Arduino!" class="md-nav__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Hands on Arduino!
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre-Course
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pre-Course
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/00-Welcome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/01-C-Fundamentals-Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Fundamentals Primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/02-Practice-Problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practice Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-voltage-current-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Voltage, Current, Resistance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Voltage, Current, Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ohm's Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-reading-resistor-color-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reading Resistor Color Codes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-the-breadboard-underneath-the-holes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. The Breadboard, Underneath the Holes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-arduinos-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Arduino's Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-using-a-multimeter-just-enough-to-get-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Using a Multimeter (Just Enough to Get Started)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Exercises
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-resistor-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Resistor Sizing ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-color-code-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Color Code Practice ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-breadboard-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Breadboard Tracing ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-power-budget-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 — Power Budget Check ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-C%20Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-Blink/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blink
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-Potentiometer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Potentiometer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Fire%20Alarm%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fire Alarm System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Servo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-Security%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-Tank%20Level%20Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tank Level Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-SpeedMeasurement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Speed Measurement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-DC-Motor-Driver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Motor Driver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-DHT11-Temperature-Humidity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DHT11 Temperature & Humidity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-Wireless-Communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wireless Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-Capstone-Project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Refrences/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-voltage-current-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Voltage, Current, Resistance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Voltage, Current, Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ohm's Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-reading-resistor-color-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Reading Resistor Color Codes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-the-breadboard-underneath-the-holes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. The Breadboard, Underneath the Holes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-arduinos-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Arduino's Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-using-a-multimeter-just-enough-to-get-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Using a Multimeter (Just Enough to Get Started)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Exercises
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Exercises">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-resistor-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Resistor Sizing ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-color-code-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Color Code Practice ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-breadboard-tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Breadboard Tracing ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-power-budget-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 — Power Budget Check ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/tahafarshbaf/arduino_course/edit/main/Lectures/00-Electronics Fundamentals.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="lecture-00-electronics-fundamentals">Lecture 00 — Electronics Fundamentals<a class="headerlink" href="#lecture-00-electronics-fundamentals" title="Permanent link">&para;</a></h1>
+<p>Every project from here on hands you a component list with things like
+"220 Ω resistor" and a wiring diagram that just works — without ever
+explaining <em>why</em> it's 220 Ω and not 1 Ω, or why some pins can't be
+connected straight to a motor. This lecture fills that gap once, so every
+later lecture can stop re-explaining it.</p>
+<h2 id="1-what-will-you-learn">1. What Will You Learn?<a class="headerlink" href="#1-what-will-you-learn" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Voltage, current, and resistance, and how Ohm's Law ties them together</li>
+<li>How to read a resistor's value from its color bands</li>
+<li>How a breadboard is actually wired underneath the holes</li>
+<li>Why Arduino pins have current limits, and when a project needs an
+  external power supply</li>
+<li>The absolute basics of using a multimeter</li>
+</ul>
+<h2 id="2-voltage-current-resistance">2. Voltage, Current, Resistance<a class="headerlink" href="#2-voltage-current-resistance" title="Permanent link">&para;</a></h2>
+<p>Think of electricity like water in a pipe:</p>
+<table>
+<thead>
+<tr>
+<th>Electrical quantity</th>
+<th>Water analogy</th>
+<th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Voltage (V)</strong></td>
+<td>Water pressure</td>
+<td>Volts (V)</td>
+</tr>
+<tr>
+<td><strong>Current (I)</strong></td>
+<td>Flow rate (how much water moves)</td>
+<td>Amps (A)</td>
+</tr>
+<tr>
+<td><strong>Resistance (R)</strong></td>
+<td>How narrow the pipe is</td>
+<td>Ohms (Ω)</td>
+</tr>
+</tbody>
+</table>
+<p>Higher pressure (voltage) pushes more water (current) through a pipe of a
+given width (resistance). Squeeze the pipe (raise resistance) and less
+water flows for the same pressure.</p>
+<h3 id="ohms-law">Ohm's Law<a class="headerlink" href="#ohms-law" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>V = I × R
+</code></pre></div>
+<p>Three quantities, one equation — know any two, calculate the third:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>I = V / R        R = V / I        V = I × R
+</code></pre></div>
+<p><strong>Worked example:</strong> you're driving a red LED that needs about 2 V across
+it and should be limited to 15 mA (0.015 A) to stay safe, from a 5 V
+Arduino pin. The resistor has to absorb the <em>difference</em> in voltage:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>V_resistor = 5 V - 2 V = 3 V
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>R = V / I = 3 / 0.015 = 200 Ω
+</code></pre></div>
+<p>That's exactly why every LED in this course sits behind a resistor in the
+100–330 Ω range — it's this calculation, just rounded to a value you can
+actually buy.</p>
+<div class="admonition warning">
+<p class="admonition-title">Caution</p>
+<p>An LED with <strong>no</strong> resistor is not "a bit brighter" — Ohm's law still
+applies, but the LED's own resistance is tiny and unpredictable, so
+current spikes far past its rating in a fraction of a second and it
+burns out. Every LED in this course needs a resistor in series, no
+exceptions.</p>
+</div>
+<h2 id="3-reading-resistor-color-codes">3. Reading Resistor Color Codes<a class="headerlink" href="#3-reading-resistor-color-codes" title="Permanent link">&para;</a></h2>
+<p>Resistors are too small to print numbers on, so they use colored bands
+instead. A standard 4-band resistor reads:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[Band 1][Band 2][Multiplier][Tolerance]
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  digit    digit    ×10^n      ± %
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Digit</th>
+<th>Multiplier</th>
+<th>Tolerance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Black</td>
+<td>0</td>
+<td>×1</td>
+<td></td>
+</tr>
+<tr>
+<td>Brown</td>
+<td>1</td>
+<td>×10</td>
+<td>±1%</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>2</td>
+<td>×100</td>
+<td>±2%</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td>3</td>
+<td>×1,000</td>
+<td></td>
+</tr>
+<tr>
+<td>Yellow</td>
+<td>4</td>
+<td>×10,000</td>
+<td></td>
+</tr>
+<tr>
+<td>Green</td>
+<td>5</td>
+<td>×100,000</td>
+<td></td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>6</td>
+<td>×1,000,000</td>
+<td></td>
+</tr>
+<tr>
+<td>Violet</td>
+<td>7</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Grey</td>
+<td>8</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>White</td>
+<td>9</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Gold</td>
+<td></td>
+<td>×0.1</td>
+<td>±5%</td>
+</tr>
+<tr>
+<td>Silver</td>
+<td></td>
+<td>×0.01</td>
+<td>±10%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong> Red-Red-Brown-Gold → <code>2</code>, <code>2</code>, ×10, ±5% → <strong>220 Ω, ±5%</strong> —
+the exact resistor this course keeps asking you to grab for LEDs.</p>
+<p>You don't need to memorize this table by heart; every simulator (Wokwi,
+Tinkercad) shows the resistance value directly when you click a resistor.
+What matters is understanding that <strong>the color bands are just an encoded
+number</strong>, so a datasheet or schematic saying "220 Ω" and a real resistor
+in your hand saying "Red-Red-Brown" are the same fact in two notations.</p>
+<h2 id="4-the-breadboard-underneath-the-holes">4. The Breadboard, Underneath the Holes<a class="headerlink" href="#4-the-breadboard-underneath-the-holes" title="Permanent link">&para;</a></h2>
+<p>A breadboard <em>looks</em> like a uniform grid of holes, but the copper strips
+underneath connect them in a specific pattern:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>  + ─────────────────────────────────────  ← power rail (+), one long strip
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  − ─────────────────────────────────────  ← power rail (−), one long strip
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  a b c d e │ f g h i j
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  a b c d e │ f g h i j     ← each column (a-e) of 5 holes is one
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>  a b c d e │ f g h i j       connected strip, but NOT connected
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>  a b c d e │ f g h i j       across the center gap to f-j
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>  a b c d e │ f g h i j
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        ...
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  + ─────────────────────────────────────
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  − ─────────────────────────────────────
+</code></pre></div>
+<ul>
+<li>The two long <strong>rails</strong> at top and bottom (often marked red <code>+</code> and blue
+  <code>−</code>) run the full length of the board — that's where you bring in 5V and
+  GND once, then tap into them anywhere.</li>
+<li>The middle section is split into short <strong>columns of 5 holes</strong>, each
+  column internally connected — but <em>not</em> connected to the column next to
+  it, and <em>not</em> connected across the center gap.</li>
+</ul>
+<p>This is why a wire "one hole over" sometimes does nothing (still the same
+column) and why plugging a component straight across the center gap is a
+common way to bridge two separate circuits by accident.</p>
+<h2 id="5-arduinos-power-budget">5. Arduino's Power Budget<a class="headerlink" href="#5-arduinos-power-budget" title="Permanent link">&para;</a></h2>
+<p>The Arduino Uno's 5V pin doesn't have infinite current to give:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Safe current limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A single digital I/O pin</td>
+<td>~20 mA continuous (40 mA absolute max)</td>
+</tr>
+<tr>
+<td>The board's 5V pin (via USB)</td>
+<td>~500 mA total, shared across everything</td>
+</tr>
+<tr>
+<td>The board's 5V pin (external power)</td>
+<td>up to ~1–2 A, depends on the supply</td>
+</tr>
+</tbody>
+</table>
+<p>An LED draws ~15–20 mA — well within a pin's limit, which is why
+<code>digitalWrite(pin, HIGH)</code> can drive one directly (through its resistor).</p>
+<p>A <strong>servo motor</strong> or a <strong>DC motor</strong>, on the other hand, can draw
+<strong>hundreds of milliamps to a few amps</strong>, especially when it stalls or
+starts moving. That is far beyond what a single pin — or sometimes even
+the whole 5V rail from USB — can safely supply.</p>
+<div class="admonition warning">
+<p class="admonition-title">Caution</p>
+<p>Powering a servo or motor from the Arduino's own 5V pin off USB "mostly
+works" in a demo and then resets the board or fries a regulator under
+load. Projects with a motor or more than one servo need their own
+external power supply for the motor, with the grounds of the Arduino and
+the external supply <strong>tied together</strong> (a shared GND reference is the one
+connection that can never be skipped).</p>
+</div>
+<h2 id="6-using-a-multimeter-just-enough-to-get-started">6. Using a Multimeter (Just Enough to Get Started)<a class="headerlink" href="#6-using-a-multimeter-just-enough-to-get-started" title="Permanent link">&para;</a></h2>
+<p>A multimeter has (at least) three modes relevant here:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Symbol</th>
+<th>Use it to...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voltage (DC)</td>
+<td><code>V⎓</code></td>
+<td>Measure voltage <strong>across</strong> two points — probes touch both ends of a component, in parallel with it</td>
+</tr>
+<tr>
+<td>Current (DC)</td>
+<td><code>A⎓</code></td>
+<td>Measure current <strong>through</strong> a wire — the meter must be placed <em>in series</em>, breaking the circuit to insert itself</td>
+</tr>
+<tr>
+<td>Continuity / Resistance</td>
+<td><code>Ω</code> / <code>)))</code></td>
+<td>Check if two points are electrically connected (beeps), or measure a resistor's value, with the <strong>circuit powered off</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The most common beginner mistake is trying to measure current the same way
+as voltage (probes touching two points without breaking the circuit) —
+this doesn't measure anything useful and, depending on the meter, can trip
+its internal fuse.</p>
+<h2 id="7-exercises">7. Exercises<a class="headerlink" href="#7-exercises" title="Permanent link">&para;</a></h2>
+<h3 id="exercise-1-resistor-sizing">Exercise 1 — Resistor Sizing ⭐<a class="headerlink" href="#exercise-1-resistor-sizing" title="Permanent link">&para;</a></h3>
+<p>A green LED needs about 2.1 V across it and should be limited to 20 mA.
+It will be driven from a 5V Arduino pin. Calculate the resistor value you
+need, then find the closest standard resistor value at or above your
+answer (standard values include 100, 150, 220, 330, 470, 680, 1000 Ω).</p>
+<h3 id="exercise-2-color-code-practice">Exercise 2 — Color Code Practice ⭐<a class="headerlink" href="#exercise-2-color-code-practice" title="Permanent link">&para;</a></h3>
+<p>Decode these resistor color bands into resistance values:
+1. Brown-Black-Red-Gold
+2. Yellow-Violet-Orange-Gold
+3. Green-Blue-Brown-Gold</p>
+<h3 id="exercise-3-breadboard-tracing">Exercise 3 — Breadboard Tracing ⭐⭐<a class="headerlink" href="#exercise-3-breadboard-tracing" title="Permanent link">&para;</a></h3>
+<p>Sketch (on paper) a simple LED + resistor circuit powered from the two
+rails of a breadboard, with the LED's anode in column <code>c3</code> and the
+resistor connecting <code>c3</code>'s row to the <code>+</code> rail. Mark every hole that is
+electrically the same node.</p>
+<h3 id="exercise-4-power-budget-check">Exercise 4 — Power Budget Check ⭐⭐<a class="headerlink" href="#exercise-4-power-budget-check" title="Permanent link">&para;</a></h3>
+<p>You're building a robot with 4 DC motors, each drawing up to 300 mA when
+starting. Calculate the total current if all 4 start simultaneously.
+Compare it against the Arduino's USB-powered 5V budget (~500 mA) and
+explain, in your own words, why this project needs an external power
+supply.</p>
+<hr />
+<p><strong>Next:</strong> <a href="../01-Introduction/">Lecture 01 - Introduction →</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/tahafarshbaf/arduino_course" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

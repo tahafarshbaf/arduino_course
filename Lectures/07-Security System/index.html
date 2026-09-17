@@ -1,0 +1,2660 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner Arduino programming course — Shahid Rajaei University">
+      
+      
+      
+        <link rel="canonical" href="https://tahafarshbaf.github.io/arduino_course/Lectures/07-Security%20System/">
+      
+      
+        <link rel="prev" href="../06-Servo/">
+      
+      
+        <link rel="next" href="../08-Tank%20Level%20Control/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Security System - Hands on Arduino!</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-07-security-system-keypad-lcd-persistent-user-database" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hands on Arduino!" class="md-header__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hands on Arduino!
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Security System
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Pre-Course/00-Welcome/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Pre-Course
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../00-Electronics%20Fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Lectures
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hands on Arduino!" class="md-nav__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Hands on Arduino!
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre-Course
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pre-Course
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/00-Welcome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/01-C-Fundamentals-Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Fundamentals Primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/02-Practice-Problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practice Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-Electronics%20Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-C%20Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-Blink/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blink
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-Potentiometer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Potentiometer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Fire%20Alarm%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fire Alarm System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Servo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security System
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-we-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Are We Building?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. What Are We Building?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-numbering-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Numbering Scheme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-feature-lockout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Feature: Lockout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-components-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Components Needed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Key Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-i2c-communication-and-the-wire-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 I2C Communication and the Wire Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-installing-third-party-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Installing Third-Party Libraries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-the-liquidcrystal_i2c-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 The LiquidCrystal_I2C Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-matrix-keypads-and-2d-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Matrix Keypads and 2D Arrays
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-eeprom-storage-that-survives-power-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 EEPROM — Storage That Survives Power Loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 EEPROM — Storage That Survives Power Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-first-run-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "First Run" Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-designing-a-user-database-in-eeprom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Designing a User Database in EEPROM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-extended-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Extended State Machines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-building-input-from-key-presses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Building Input from Key Presses
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-hardware-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Hardware Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Hardware Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiring-diagram-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Diagram (Text)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-i2c-address-scanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool: I2C Address Scanner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lcd-contrast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LCD Contrast
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. The Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1-single-shared-password-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 1 — Single Shared Password (Foundation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-check-lockout-at-the-very-top-of-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Check Lockout at the Very Top of loop()?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-a-used-for-the-admin-menu-not-a-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Is 'A' Used for the Admin Menu, Not a Number?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tracing-an-example-admin-edits-user-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracing an Example: Admin Edits User 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises &amp; Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Exercises &amp; Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-change-default-admin-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Change Default Admin PIN ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-add-buzzer-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Add Buzzer Feedback ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-lockout-countdown-on-lcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Lockout Countdown on LCD ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-5-fix-the-leading-zero-pin-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 5 — Fix the Leading-Zero PIN Problem ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-Tank%20Level%20Control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tank Level Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-SpeedMeasurement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Speed Measurement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-DC-Motor-Driver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Motor Driver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-DHT11-Temperature-Humidity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DHT11 Temperature & Humidity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-Wireless-Communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wireless Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-Capstone-Project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Refrences/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-we-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Are We Building?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. What Are We Building?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#user-numbering-scheme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        User Numbering Scheme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security-feature-lockout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security Feature: Lockout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-components-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Components Needed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Key Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-i2c-communication-and-the-wire-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 I2C Communication and the Wire Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-installing-third-party-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Installing Third-Party Libraries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-the-liquidcrystal_i2c-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 The LiquidCrystal_I2C Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-matrix-keypads-and-2d-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Matrix Keypads and 2D Arrays
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-eeprom-storage-that-survives-power-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 EEPROM — Storage That Survives Power Loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 EEPROM — Storage That Survives Power Loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-first-run-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "First Run" Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-designing-a-user-database-in-eeprom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Designing a User Database in EEPROM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-extended-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Extended State Machines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-building-input-from-key-presses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Building Input from Key Presses
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-hardware-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Hardware Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Hardware Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiring-diagram-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Diagram (Text)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tool-i2c-address-scanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tool: I2C Address Scanner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lcd-contrast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LCD Contrast
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. The Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1-single-shared-password-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 1 — Single Shared Password (Foundation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-check-lockout-at-the-very-top-of-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Check Lockout at the Very Top of loop()?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-a-used-for-the-admin-menu-not-a-number" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Is 'A' Used for the Admin Menu, Not a Number?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tracing-an-example-admin-edits-user-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracing an Example: Admin Edits User 3
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises &amp; Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Exercises &amp; Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-change-default-admin-pin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Change Default Admin PIN ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-add-buzzer-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Add Buzzer Feedback ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-lockout-countdown-on-lcd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Lockout Countdown on LCD ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-5-fix-the-leading-zero-pin-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 5 — Fix the Leading-Zero PIN Problem ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/tahafarshbaf/arduino_course/edit/main/Lectures/07-Security System.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="project-07-security-system-keypad-lcd-persistent-user-database">Project 07 — Security System: Keypad, LCD &amp; Persistent User Database<a class="headerlink" href="#project-07-security-system-keypad-lcd-persistent-user-database" title="Permanent link">&para;</a></h1>
+<h2 id="1-what-are-we-building">1. What Are We Building?<a class="headerlink" href="#1-what-are-we-building" title="Permanent link">&para;</a></h2>
+<p>We will build an <strong>entrance security system</strong> for a building, similar to a keypad
+door lock used in offices and apartment buildings.</p>
+<ul>
+<li>A <strong>4×4 matrix keypad</strong> lets people enter a <strong>User ID</strong> and a <strong>PIN code</strong>.</li>
+<li>A <strong>16×2 I2C LCD</strong> displays prompts, feedback, and menus.</li>
+<li>A <strong>green LED</strong> lights up when access is granted.</li>
+<li>A <strong>red LED</strong> lights up when access is denied.</li>
+<li>All user accounts and PINs are stored in <strong>EEPROM</strong>, so they survive power loss.</li>
+</ul>
+<h3 id="user-numbering-scheme">User Numbering Scheme<a class="headerlink" href="#user-numbering-scheme" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>User ID</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td><strong>Administrator</strong> — can add new users or change anyone's PIN</td>
+</tr>
+<tr>
+<td><strong>1 – 10</strong></td>
+<td>Regular building users, each with their own PIN</td>
+</tr>
+</tbody>
+</table>
+<p>The administrator logs in with ID <code>0</code> and the <strong>admin password</strong>. From the admin
+menu, they can register a new user or update an existing user's PIN — both using
+the same simple operation: <em>"set User ID <code>X</code>'s PIN to <code>____</code>."</em> If User <code>X</code> didn't
+exist before, this operation creates them. If they did exist, it overwrites their PIN.</p>
+<h3 id="security-feature-lockout">Security Feature: Lockout<a class="headerlink" href="#security-feature-lockout" title="Permanent link">&para;</a></h3>
+<p>If <strong>3 wrong PIN attempts</strong> are made in a row (for any user, including admin),
+the system locks for <strong>30 seconds</strong>, displaying a warning and ignoring all key presses.
+This is standard behavior in real access-control systems and prevents brute-force guessing.</p>
+<hr />
+<h2 id="2-what-will-you-learn">2. What Will You Learn?<a class="headerlink" href="#2-what-will-you-learn" title="Permanent link">&para;</a></h2>
+<p>By the end of this project you will be able to:</p>
+<ul>
+<li>Understand <strong>I2C communication</strong> and why it only needs two signal wires</li>
+<li>Install and use <strong>third-party libraries</strong> (Keypad, LiquidCrystal_I2C)</li>
+<li>Control a <strong>character LCD</strong>: positioning text, clearing the screen, printing variables</li>
+<li>Read a <strong>matrix keypad</strong> using a 2D array (<code>keymap</code>)</li>
+<li>Use <strong>EEPROM</strong> to store data that survives power loss</li>
+<li>Design a simple <strong>address layout</strong> for storing structured data in EEPROM</li>
+<li>Build a <strong>multi-state state machine</strong> with <code>enum</code> for a menu-driven system</li>
+<li>Build up user input character-by-character into a <code>String</code></li>
+<li>Implement a basic <strong>security lockout</strong> using <code>millis()</code></li>
+</ul>
+<hr />
+<h2 id="3-components-needed">3. Components Needed<a class="headerlink" href="#3-components-needed" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Component</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Arduino Uno</td>
+<td>Any compatible clone</td>
+</tr>
+<tr>
+<td>1</td>
+<td>4×4 Matrix Keypad</td>
+<td>16 keys: 0–9, A–D, <code>*</code>, <code>#</code></td>
+</tr>
+<tr>
+<td>1</td>
+<td>16×2 LCD with I2C backpack (PCF8574)</td>
+<td>Only 4 wires needed: VCC, GND, SDA, SCL</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Green LED</td>
+<td>Access granted indicator</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Red LED</td>
+<td>Access denied / lockout indicator</td>
+</tr>
+<tr>
+<td>2</td>
+<td>220 Ω resistors</td>
+<td>One per LED</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Breadboard</td>
+<td></td>
+</tr>
+<tr>
+<td>Several</td>
+<td>Jumper wires</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>USB cable</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Important</p>
+<p>A standard 16×2 LCD needs <strong>6+ digital pins</strong>. Our keypad already needs <strong>8 pins</strong>.
+An I2C backpack reduces the LCD to just <strong>2 signal wires (SDA, SCL)</strong> — freeing up
+almost all of the Arduino's pins for the keypad and LEDs.</p>
+</div>
+<hr />
+<h2 id="4-key-concepts">4. Key Concepts<a class="headerlink" href="#4-key-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="41-i2c-communication-and-the-wire-library">4.1 I2C Communication and the <code>Wire</code> Library<a class="headerlink" href="#41-i2c-communication-and-the-wire-library" title="Permanent link">&para;</a></h3>
+<p><strong>I2C (Inter-Integrated Circuit)</strong> is a communication protocol that lets multiple
+devices share just <strong>two wires</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Wire</th>
+<th>Name</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SDA</strong></td>
+<td>Serial Data</td>
+<td>Carries the actual data</td>
+</tr>
+<tr>
+<td><strong>SCL</strong></td>
+<td>Serial Clock</td>
+<td>Synchronizes timing between devices</td>
+</tr>
+</tbody>
+</table>
+<p>On Arduino Uno, these are fixed to specific pins:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Arduino Uno Pin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SDA</td>
+<td><strong>A4</strong></td>
+</tr>
+<tr>
+<td>SCL</td>
+<td><strong>A5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Every I2C device has a unique <strong>address</strong> (a number from 0–127) so the Arduino can
+talk to multiple devices on the same two wires without confusion. The <code>Wire</code> library
+(built into Arduino) handles the low-level protocol — we rarely call it directly,
+but library authors use it internally.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most I2C LCD backpacks use address <code>0x27</code> or <code>0x3F</code>. If your LCD shows nothing,
+see the <strong>I2C Scanner</strong> tool in Section 5.</p>
+</div>
+<h3 id="42-installing-third-party-libraries">4.2 Installing Third-Party Libraries<a class="headerlink" href="#42-installing-third-party-libraries" title="Permanent link">&para;</a></h3>
+<p>So far we have only used the <strong>Servo</strong> library, which comes built into the Arduino IDE.
+This project needs <strong>two libraries that must be installed manually</strong>:</p>
+<ul>
+<li><code>Keypad</code> by Mark Stanley &amp; Alexander Brevig</li>
+<li><code>LiquidCrystal_I2C</code> by Frank de Brabander (or "Lucas Maziero" fork — either works)</li>
+</ul>
+<p><strong>To install a library:</strong></p>
+<ol>
+<li>Open Arduino IDE</li>
+<li>Go to <strong>Sketch → Include Library → Manage Libraries…</strong></li>
+<li>Search for the library name</li>
+<li>Click <strong>Install</strong></li>
+</ol>
+<p>Once installed, <code>#include &lt;LibraryName.h&gt;</code> works exactly like the built-in libraries.</p>
+<h3 id="43-the-liquidcrystal_i2c-library">4.3 The LiquidCrystal_I2C Library<a class="headerlink" href="#43-the-liquidcrystal_i2c-library" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;LiquidCrystal_I2C.h&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">LiquidCrystal_I2C</span><span class="w"> </span><span class="nf">lcd</span><span class="p">(</span><span class="mh">0x27</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w">   </span><span class="c1">// I2C address, columns, rows</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>What It Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>lcd.init()</code></td>
+<td>Initialize the display (call once in <code>setup()</code>)</td>
+</tr>
+<tr>
+<td><code>lcd.backlight()</code></td>
+<td>Turn on the backlight</td>
+</tr>
+<tr>
+<td><code>lcd.clear()</code></td>
+<td>Erase everything on the screen</td>
+</tr>
+<tr>
+<td><code>lcd.setCursor(col, row)</code></td>
+<td>Move the "cursor" to a position (0-indexed: columns 0–15, rows 0–1)</td>
+</tr>
+<tr>
+<td><code>lcd.print(value)</code></td>
+<td>Print text or a number at the current cursor position</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example — print on both lines:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Enter User ID:"</span><span class="p">);</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">);</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike <code>Serial.println()</code>, the LCD does <strong>not</strong> scroll or wrap automatically.
+Text that goes past column 15 simply disappears. Always call <code>lcd.clear()</code>
+before drawing a new screen to avoid leftover characters.</p>
+</div>
+<h3 id="44-matrix-keypads-and-2d-arrays">4.4 Matrix Keypads and 2D Arrays<a class="headerlink" href="#44-matrix-keypads-and-2d-arrays" title="Permanent link">&para;</a></h3>
+<p>A 4×4 matrix keypad has <strong>16 buttons</strong> but only <strong>8 wires</strong> (4 rows + 4 columns).
+Each button sits at the intersection of one row wire and one column wire. The
+<code>Keypad</code> library scans these wires to determine which button is pressed.</p>
+<p>We describe the button layout using a <strong>2D array</strong> (an array of arrays):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">char</span><span class="w"> </span><span class="n">keys</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="p">{</span><span class="sc">'1'</span><span class="p">,</span><span class="sc">'2'</span><span class="p">,</span><span class="sc">'3'</span><span class="p">,</span><span class="sc">'A'</span><span class="p">},</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="p">{</span><span class="sc">'4'</span><span class="p">,</span><span class="sc">'5'</span><span class="p">,</span><span class="sc">'6'</span><span class="p">,</span><span class="sc">'B'</span><span class="p">},</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="p">{</span><span class="sc">'7'</span><span class="p">,</span><span class="sc">'8'</span><span class="p">,</span><span class="sc">'9'</span><span class="p">,</span><span class="sc">'C'</span><span class="p">},</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="p">{</span><span class="sc">'*'</span><span class="p">,</span><span class="sc">'0'</span><span class="p">,</span><span class="sc">'#'</span><span class="p">,</span><span class="sc">'D'</span><span class="p">}</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">};</span>
+</code></pre></div>
+<p><code>keys[row][col]</code> — for example, <code>keys[0][0]</code> is <code>'1'</code>, <code>keys[3][2]</code> is <code>'#'</code>.</p>
+<p>Setting up the keypad object:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Keypad.h&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">ROWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">COLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kt">byte</span><span class="w"> </span><span class="n">rowPins</span><span class="p">[</span><span class="n">ROWS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">};</span><span class="w">   </span><span class="c1">// Connect to keypad row pins</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kt">byte</span><span class="w"> </span><span class="n">colPins</span><span class="p">[</span><span class="n">COLS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">};</span><span class="w">   </span><span class="c1">// Connect to keypad column pins</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">Keypad</span><span class="w"> </span><span class="n">keypad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Keypad</span><span class="p">(</span><span class="n">makeKeymap</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span><span class="w"> </span><span class="n">rowPins</span><span class="p">,</span><span class="w"> </span><span class="n">colPins</span><span class="p">,</span><span class="w"> </span><span class="n">ROWS</span><span class="p">,</span><span class="w"> </span><span class="n">COLS</span><span class="p">);</span>
+</code></pre></div>
+<p>Reading a key press is a single line:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">char</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keypad</span><span class="p">.</span><span class="n">getKey</span><span class="p">();</span><span class="w">   </span><span class="c1">// Returns the character, or NO_KEY (0) if nothing pressed</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong><code>if (key)</code></strong> works because <code>NO_KEY</code> is defined as <code>0</code>, and <code>0</code> is <code>false</code> in
+a boolean context — so <code>if (key)</code> is <code>true</code> only when a real key was pressed.</p>
+</div>
+<h3 id="45-eeprom-storage-that-survives-power-loss">4.5 EEPROM — Storage That Survives Power Loss<a class="headerlink" href="#45-eeprom-storage-that-survives-power-loss" title="Permanent link">&para;</a></h3>
+<p>Every variable we've used so far lives in <strong>RAM</strong>, which is <strong>erased when power is
+removed</strong>. For a security system, this is a problem — every power cycle would
+forget all registered users and reset PINs to default!</p>
+<p><strong>EEPROM</strong> (Electrically Erasable Programmable Read-Only Memory) is a small
+separate memory chip built into the Arduino that <strong>retains data without power</strong>.
+Arduino Uno has <strong>1024 bytes</strong> of EEPROM.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;EEPROM.h&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Use For</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EEPROM.write(address, byteValue)</code></td>
+<td>Writing a single byte (0–255)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>EEPROM.read(address)</code></td>
+<td>Reading a single byte</td>
+<td></td>
+</tr>
+<tr>
+<td><code>EEPROM.put(address, variable)</code></td>
+<td>Writing any data type (int, float, etc.)</td>
+<td>Only writes if the value actually changed</td>
+</tr>
+<tr>
+<td><code>EEPROM.get(address, variable)</code></td>
+<td>Reading any data type</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Caution</p>
+<p>EEPROM has a limited lifespan, approximately <strong>100,000 write cycles</strong>
+per memory cell. <code>EEPROM.put()</code> checks whether the value has changed before
+writing, automatically protecting the chip. Avoid calling <code>EEPROM.write()</code>
+repeatedly in a loop with changing values.</p>
+</div>
+<h4 id="the-first-run-problem">The "First Run" Problem<a class="headerlink" href="#the-first-run-problem" title="Permanent link">&para;</a></h4>
+<p>The very first time your code runs on a fresh Arduino, EEPROM contains <strong>random
+leftover data</strong> from the factory or previous sketches. We need a way to detect
+"has this EEPROM ever been set up by <em>our</em> program?"</p>
+<p><strong>Solution: a "magic number."</strong> We reserve address 0 for a special marker byte.
+On startup, we check if it matches our chosen magic number:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xCD</span><span class="p">;</span><span class="w">   </span><span class="c1">// arbitrary "signature" value</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="c1">// EEPROM has never been initialized by this program — set defaults</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="c1">// ... write default values ...</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="n">EEPROM</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="p">);</span><span class="w">   </span><span class="c1">// mark as initialized</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>After this runs once, the magic number is permanently stored, and every future
+power-on skips re-initialization — preserving any changes the admin made.</p>
+<h3 id="46-designing-a-user-database-in-eeprom">4.6 Designing a User Database in EEPROM<a class="headerlink" href="#46-designing-a-user-database-in-eeprom" title="Permanent link">&para;</a></h3>
+<p>We need to store, for each user ID 1–10:</p>
+<ul>
+<li>An <strong>active flag</strong> (1 byte): is this user ID registered? (0 = no, 1 = yes)</li>
+<li>A <strong>PIN</strong> (an <code>int</code>, 2 bytes on Arduino Uno)</li>
+</ul>
+<p>Plus one admin PIN (<code>int</code>, 2 bytes) and one magic-number byte.</p>
+<p>We calculate addresses using simple formulas instead of hardcoding 30+ numbers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">EEPROM_FLAG_ADDR</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">     </span><span class="c1">// 1 byte  — magic number</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">EEPROM_ADMIN_ADDR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">     </span><span class="c1">// 2 bytes — admin PIN (addresses 1-2)</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">// User i's data starts at address 3 + (i-1)*3</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">//   byte 0 of that block: active flag</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1">//   bytes 1-2:            PIN (int)</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="kt">int</span><span class="w"> </span><span class="nf">userActiveAddr</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">userID</span><span class="p">)</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">userID</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="kt">int</span><span class="w"> </span><span class="nf">userPasswordAddr</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">userID</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">userID</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Memory map for MAX_USERS = 10:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Address Range</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Magic number (initialization flag)</td>
+</tr>
+<tr>
+<td>1–2</td>
+<td>Admin PIN</td>
+</tr>
+<tr>
+<td>3</td>
+<td>User 1 active flag</td>
+</tr>
+<tr>
+<td>4–5</td>
+<td>User 1 PIN</td>
+</tr>
+<tr>
+<td>6</td>
+<td>User 2 active flag</td>
+</tr>
+<tr>
+<td>7–8</td>
+<td>User 2 PIN</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>30</td>
+<td>User 10 active flag</td>
+</tr>
+<tr>
+<td>31–32</td>
+<td>User 10 PIN</td>
+</tr>
+</tbody>
+</table>
+<p>Total used: <strong>33 bytes</strong> out of 1024 available — plenty of room to spare.</p>
+<h3 id="47-extended-state-machines">4.7 Extended State Machines<a class="headerlink" href="#47-extended-state-machines" title="Permanent link">&para;</a></h3>
+<p>In Project 04, our fire alarm had two states: NORMAL and ALARM. This project needs
+<strong>many more states</strong> because it behaves like a menu system:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">SystemState</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="n">IDLE</span><span class="p">,</span><span class="w">                  </span><span class="c1">// "Enter User ID:"</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="n">ENTERING_ID</span><span class="p">,</span><span class="w">           </span><span class="c1">// user is typing their ID</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="n">ENTERING_PASSWORD</span><span class="p">,</span><span class="w">     </span><span class="c1">// user is typing their PIN</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="n">ADMIN_MENU</span><span class="p">,</span><span class="w">            </span><span class="c1">// admin logged in, showing menu</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="n">ADMIN_SELECT_USER</span><span class="p">,</span><span class="w">     </span><span class="c1">// admin is typing which user to edit</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="n">ADMIN_NEW_PASSWORD</span><span class="p">,</span><span class="w">    </span><span class="c1">// admin is typing the new PIN for that user</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="n">LOCKED_OUT</span><span class="w">             </span><span class="c1">// too many wrong attempts — ignore input</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">};</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">SystemState</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IDLE</span><span class="p">;</span>
+</code></pre></div>
+<p>A <code>switch</code> on <code>state</code> inside <code>loop()</code> decides <strong>how to interpret the next key press</strong>
+— the same key (<code>'5'</code>, for example) means something different depending on the
+current state: part of an ID, part of a PIN, or part of a new password.</p>
+<h3 id="48-building-input-from-key-presses">4.8 Building Input from Key Presses<a class="headerlink" href="#48-building-input-from-key-presses" title="Permanent link">&para;</a></h3>
+<p>The keypad gives us <strong>one character at a time</strong>. We accumulate these into a <code>String</code>
+until the user presses <code>#</code> (submit) or <code>*</code> (cancel):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">String</span><span class="w"> </span><span class="n">inputBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">// On each numeric key press:</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="sc">'0'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">'9'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">inputBuffer</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span><span class="w">          </span><span class="c1">// Append digit to the string</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">// On '#' (submit):</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="kt">int</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inputBuffer</span><span class="p">.</span><span class="n">toInt</span><span class="p">();</span><span class="w">  </span><span class="c1">// Convert "1234" → 1234</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">inputBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span><span class="w">                 </span><span class="c1">// Clear for next entry</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Limitation to be aware of:</strong> <code>"0012".toInt()</code> returns <code>12</code>, not <code>0012</code>. If a
+PIN is stored as <code>12</code> and the user types <code>"0012"</code>, it will still match — both
+become <code>12</code> after <code>toInt()</code>. This is consistent (both sides go through the same
+conversion) but means <strong>leading zeros don't make PINs more unique</strong>. See
+Exercise 6 for a fix using <code>String</code> comparison instead.</p>
+</div>
+<hr />
+<h2 id="5-hardware-setup">5. Hardware Setup<a class="headerlink" href="#5-hardware-setup" title="Permanent link">&para;</a></h2>
+<h3 id="pin-connections">Pin Connections<a class="headerlink" href="#pin-connections" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Arduino Pin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keypad Row 1–4</td>
+<td>9, 8, 7, 6</td>
+</tr>
+<tr>
+<td>Keypad Col 1–4</td>
+<td>5, 4, 3, 2</td>
+</tr>
+<tr>
+<td>LCD SDA</td>
+<td>A4</td>
+</tr>
+<tr>
+<td>LCD SCL</td>
+<td>A5</td>
+</tr>
+<tr>
+<td>LCD VCC</td>
+<td>5V</td>
+</tr>
+<tr>
+<td>LCD GND</td>
+<td>GND</td>
+</tr>
+<tr>
+<td>Green LED (+)</td>
+<td>220Ω → Pin 11</td>
+</tr>
+<tr>
+<td>Red LED (+)</td>
+<td>220Ω → Pin 12</td>
+</tr>
+<tr>
+<td>Both LED (–)</td>
+<td>GND</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wiring-diagram-text">Wiring Diagram (Text)<a class="headerlink" href="#wiring-diagram-text" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Arduino                 4x4 Keypad
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>─────────              ────────────
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Pin 9  ─────────────── R1
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>Pin 8  ─────────────── R2
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Pin 7  ─────────────── R3
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>Pin 6  ─────────────── R4
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>Pin 5  ─────────────── C1
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>Pin 4  ─────────────── C2
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Pin 3  ─────────────── C3
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>Pin 2  ─────────────── C4
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>Arduino                 I2C LCD Backpack
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>─────────              ──────────────────
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>5V     ─────────────── VCC
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>GND    ─────────────── GND
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>A4     ─────────────── SDA
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>A5     ─────────────── SCL
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>Arduino                 LEDs
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>─────────              ──────────────────
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>Pin 11 ── [220Ω] ────── Green LED (+) ── GND
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>Pin 12 ── [220Ω] ────── Red LED (+)   ── GND
+</code></pre></div>
+<h3 id="tool-i2c-address-scanner">Tool: I2C Address Scanner<a class="headerlink" href="#tool-i2c-address-scanner" title="Permanent link">&para;</a></h3>
+<p>If the LCD shows nothing (blank or solid blocks), upload this small sketch first
+to find your LCD's actual I2C address:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="n">Wire</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Scanning I2C bus..."</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">127</span><span class="p">;</span><span class="w"> </span><span class="n">address</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="n">Wire</span><span class="p">.</span><span class="n">beginTransmission</span><span class="p">(</span><span class="n">address</span><span class="p">);</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="kt">byte</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Wire</span><span class="p">.</span><span class="n">endTransmission</span><span class="p">();</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">error</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Device found at address 0x"</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">address</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"0"</span><span class="p">);</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">address</span><span class="p">,</span><span class="w"> </span><span class="n">HEX</span><span class="p">);</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Scan complete."</span><span class="p">);</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="p">}</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{}</span>
+</code></pre></div>
+<p>Use the address printed here (commonly <code>0x27</code> or <code>0x3F</code>) in your <code>LiquidCrystal_I2C</code>
+constructor.</p>
+<h3 id="lcd-contrast">LCD Contrast<a class="headerlink" href="#lcd-contrast" title="Permanent link">&para;</a></h3>
+<p>Many I2C LCD backpacks have a small <strong>potentiometer</strong>. If the screen is blank or
+shows solid black blocks, turn this potentiometer with a screwdriver until text
+becomes visible — this adjusts contrast, not brightness.</p>
+<hr />
+<h2 id="6-the-code">6. The Code<a class="headerlink" href="#6-the-code" title="Permanent link">&para;</a></h2>
+<h3 id="version-1-single-shared-password-foundation">Version 1 — Single Shared Password (Foundation)<a class="headerlink" href="#version-1-single-shared-password-foundation" title="Permanent link">&para;</a></h3>
+<p>This version introduces the LCD, keypad, and EEPROM with the <strong>simplest possible</strong>
+design: one shared PIN for the whole building, no users, no admin.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;LiquidCrystal_I2C.h&gt;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Keypad.h&gt;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;EEPROM.h&gt;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1">// ── LCD setup ──────────────────────────────────────────────────</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">LiquidCrystal_I2C</span><span class="w"> </span><span class="nf">lcd</span><span class="p">(</span><span class="mh">0x27</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span><span class="w">   </span><span class="c1">// Change 0x27 if your scanner found a different address</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">// ── Keypad setup ───────────────────────────────────────────────</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">ROWS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">COLS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="kt">char</span><span class="w"> </span><span class="n">keys</span><span class="p">[</span><span class="n">ROWS</span><span class="p">][</span><span class="n">COLS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">  </span><span class="p">{</span><span class="sc">'1'</span><span class="p">,</span><span class="sc">'2'</span><span class="p">,</span><span class="sc">'3'</span><span class="p">,</span><span class="sc">'A'</span><span class="p">},</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">  </span><span class="p">{</span><span class="sc">'4'</span><span class="p">,</span><span class="sc">'5'</span><span class="p">,</span><span class="sc">'6'</span><span class="p">,</span><span class="sc">'B'</span><span class="p">},</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">  </span><span class="p">{</span><span class="sc">'7'</span><span class="p">,</span><span class="sc">'8'</span><span class="p">,</span><span class="sc">'9'</span><span class="p">,</span><span class="sc">'C'</span><span class="p">},</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">  </span><span class="p">{</span><span class="sc">'*'</span><span class="p">,</span><span class="sc">'0'</span><span class="p">,</span><span class="sc">'#'</span><span class="p">,</span><span class="sc">'D'</span><span class="p">}</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="p">};</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="kt">byte</span><span class="w"> </span><span class="n">rowPins</span><span class="p">[</span><span class="n">ROWS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">};</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="kt">byte</span><span class="w"> </span><span class="n">colPins</span><span class="p">[</span><span class="n">COLS</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">};</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">Keypad</span><span class="w"> </span><span class="n">keypad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Keypad</span><span class="p">(</span><span class="n">makeKeymap</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span><span class="w"> </span><span class="n">rowPins</span><span class="p">,</span><span class="w"> </span><span class="n">colPins</span><span class="p">,</span><span class="w"> </span><span class="n">ROWS</span><span class="p">,</span><span class="w"> </span><span class="n">COLS</span><span class="p">);</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="c1">// ── LEDs ───────────────────────────────────────────────────────</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">GREEN_LED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">RED_LED</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="c1">// ── EEPROM layout ────────────────────────────────────────────</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">EEPROM_FLAG_ADDR</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">EEPROM_PASSWORD_ADDR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">       </span><span class="c1">// 2 bytes (int)</span>
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="k">const</span><span class="w"> </span><span class="kt">byte</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="mh">0xAB</span><span class="p">;</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">DEFAULT_PASSWORD</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="mi">1234</span><span class="p">;</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>
+<a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="n">String</span><span class="w"> </span><span class="n">enteredPIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>
+<a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a><span class="w">  </span><span class="n">Wire</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+<a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
+<a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">backlight</span><span class="p">();</span>
+<a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a>
+<a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">GREEN_LED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">RED_LED</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a>
+<a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a><span class="w">  </span><span class="n">initializeEEPROM</span><span class="p">();</span>
+<a id="__codelineno-12-46" name="__codelineno-12-46" href="#__codelineno-12-46"></a><span class="w">  </span><span class="n">showIdleScreen</span><span class="p">();</span>
+<a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a><span class="p">}</span>
+<a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a>
+<a id="__codelineno-12-49" name="__codelineno-12-49" href="#__codelineno-12-49"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-50" name="__codelineno-12-50" href="#__codelineno-12-50"></a><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">keypad</span><span class="p">.</span><span class="n">getKey</span><span class="p">();</span>
+<a id="__codelineno-12-51" name="__codelineno-12-51" href="#__codelineno-12-51"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w">          </span><span class="c1">// No key pressed — do nothing</span>
+<a id="__codelineno-12-52" name="__codelineno-12-52" href="#__codelineno-12-52"></a>
+<a id="__codelineno-12-53" name="__codelineno-12-53" href="#__codelineno-12-53"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="sc">'0'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="sc">'9'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-54" name="__codelineno-12-54" href="#__codelineno-12-54"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">enteredPIN</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-55" name="__codelineno-12-55" href="#__codelineno-12-55"></a><span class="w">      </span><span class="n">enteredPIN</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<a id="__codelineno-12-56" name="__codelineno-12-56" href="#__codelineno-12-56"></a><span class="w">      </span><span class="n">updatePINDisplay</span><span class="p">();</span>
+<a id="__codelineno-12-57" name="__codelineno-12-57" href="#__codelineno-12-57"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-12-58" name="__codelineno-12-58" href="#__codelineno-12-58"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'#'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-59" name="__codelineno-12-59" href="#__codelineno-12-59"></a><span class="w">    </span><span class="n">checkPassword</span><span class="p">();</span>
+<a id="__codelineno-12-60" name="__codelineno-12-60" href="#__codelineno-12-60"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">'*'</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-61" name="__codelineno-12-61" href="#__codelineno-12-61"></a><span class="w">    </span><span class="n">enteredPIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<a id="__codelineno-12-62" name="__codelineno-12-62" href="#__codelineno-12-62"></a><span class="w">    </span><span class="n">showIdleScreen</span><span class="p">();</span>
+<a id="__codelineno-12-63" name="__codelineno-12-63" href="#__codelineno-12-63"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-64" name="__codelineno-12-64" href="#__codelineno-12-64"></a><span class="p">}</span>
+<a id="__codelineno-12-65" name="__codelineno-12-65" href="#__codelineno-12-65"></a>
+<a id="__codelineno-12-66" name="__codelineno-12-66" href="#__codelineno-12-66"></a><span class="c1">// ── EEPROM setup on first run ─────────────────────────────────</span>
+<a id="__codelineno-12-67" name="__codelineno-12-67" href="#__codelineno-12-67"></a><span class="kt">void</span><span class="w"> </span><span class="nf">initializeEEPROM</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-68" name="__codelineno-12-68" href="#__codelineno-12-68"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">EEPROM</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">EEPROM_FLAG_ADDR</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-69" name="__codelineno-12-69" href="#__codelineno-12-69"></a><span class="w">    </span><span class="n">EEPROM</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="n">EEPROM_PASSWORD_ADDR</span><span class="p">,</span><span class="w"> </span><span class="n">DEFAULT_PASSWORD</span><span class="p">);</span>
+<a id="__codelineno-12-70" name="__codelineno-12-70" href="#__codelineno-12-70"></a><span class="w">    </span><span class="n">EEPROM</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">EEPROM_FLAG_ADDR</span><span class="p">,</span><span class="w"> </span><span class="n">EEPROM_MAGIC</span><span class="p">);</span>
+<a id="__codelineno-12-71" name="__codelineno-12-71" href="#__codelineno-12-71"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-72" name="__codelineno-12-72" href="#__codelineno-12-72"></a><span class="p">}</span>
+<a id="__codelineno-12-73" name="__codelineno-12-73" href="#__codelineno-12-73"></a>
+<a id="__codelineno-12-74" name="__codelineno-12-74" href="#__codelineno-12-74"></a><span class="c1">// ── Display helpers ────────────────────────────────────────────</span>
+<a id="__codelineno-12-75" name="__codelineno-12-75" href="#__codelineno-12-75"></a><span class="kt">void</span><span class="w"> </span><span class="nf">showIdleScreen</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-76" name="__codelineno-12-76" href="#__codelineno-12-76"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<a id="__codelineno-12-77" name="__codelineno-12-77" href="#__codelineno-12-77"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-12-78" name="__codelineno-12-78" href="#__codelineno-12-78"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Enter PIN:"</span><span class="p">);</span>
+<a id="__codelineno-12-79" name="__codelineno-12-79" href="#__codelineno-12-79"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-12-80" name="__codelineno-12-80" href="#__codelineno-12-80"></a><span class="p">}</span>
+<a id="__codelineno-12-81" name="__codelineno-12-81" href="#__codelineno-12-81"></a>
+<a id="__codelineno-12-82" name="__codelineno-12-82" href="#__codelineno-12-82"></a><span class="kt">void</span><span class="w"> </span><span class="nf">updatePINDisplay</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-83" name="__codelineno-12-83" href="#__codelineno-12-83"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-12-84" name="__codelineno-12-84" href="#__codelineno-12-84"></a><span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">enteredPIN</span><span class="p">.</span><span class="n">length</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-85" name="__codelineno-12-85" href="#__codelineno-12-85"></a><span class="w">    </span><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="sc">'*'</span><span class="p">);</span><span class="w">             </span><span class="c1">// Show stars instead of digits</span>
+<a id="__codelineno-12-86" name="__codelineno-12-86" href="#__codelineno-12-86"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-87" name="__codelineno-12-87" href="#__codelineno-12-87"></a><span class="p">}</span>
+<a id="__codelineno-12-88" name="__codelineno-12-88" href="#__codelineno-12-88"></a>
+<a id="__codelineno-12-89" name="__codelineno-12-89" href="#__codelineno-12-89"></a><span class="c1">// ── Password check ─────────────────────────────────────────────</span>
+<a id="__codelineno-12-90" name="__codelineno-12-90" href="#__codelineno-12-90"></a><span class="kt">void</span><span class="w"> </span><span class="nf">checkPassword</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-91" name="__codelineno-12-91" href="#__codelineno-12-91"></a><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">storedPassword</span><span class="p">;</span>
+<a id="__codelineno-12-92" name="__codelineno-12-92" href="#__codelineno-12-92"></a><span class="w">  </span><span class="n">EEPROM</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">EEPROM_PASSWORD_ADDR</span><span class="p">,</span><span class="w"> </span><span class="n">storedPassword</span><span class="p">);</span>
+<a id="__codelineno-12-93" name="__codelineno-12-93" href="#__codelineno-12-93"></a>
+<a id="__codelineno-12-94" name="__codelineno-12-94" href="#__codelineno-12-94"></a><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">entered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">enteredPIN</span><span class="p">.</span><span class="n">toInt</span><span class="p">();</span>
+<a id="__codelineno-12-95" name="__codelineno-12-95" href="#__codelineno-12-95"></a>
+<a id="__codelineno-12-96" name="__codelineno-12-96" href="#__codelineno-12-96"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+<a id="__codelineno-12-97" name="__codelineno-12-97" href="#__codelineno-12-97"></a><span class="w">  </span><span class="n">lcd</span><span class="p">.</span><span class="n">setCursor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-12-98" name="__codelineno-12-98" href="#__codelineno-12-98"></a>
+<a id="__codelineno-12-99" name="__codelineno-12-99" href="#__codelineno-12-99"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">entered</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">storedPassword</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-100" name="__codelineno-12-100" href="#__codelineno-12-100"></a><span class="w">    </span><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Access Granted"</span><span class="p">);</span>
+<a id="__codelineno-12-101" name="__codelineno-12-101" href="#__codelineno-12-101"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">GREEN_LED</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-12-102" name="__codelineno-12-102" href="#__codelineno-12-102"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-12-103" name="__codelineno-12-103" href="#__codelineno-12-103"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">GREEN_LED</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-12-104" name="__codelineno-12-104" href="#__codelineno-12-104"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-105" name="__codelineno-12-105" href="#__codelineno-12-105"></a><span class="w">    </span><span class="n">lcd</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Access Denied"</span><span class="p">);</span>
+<a id="__codelineno-12-106" name="__codelineno-12-106" href="#__codelineno-12-106"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">RED_LED</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-12-107" name="__codelineno-12-107" href="#__codelineno-12-107"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">2000</span><span class="p">);</span>
+<a id="__codelineno-12-108" name="__codelineno-12-108" href="#__codelineno-12-108"></a><span class="w">    </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">RED_LED</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-12-109" name="__codelineno-12-109" href="#__codelineno-12-109"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-110" name="__codelineno-12-110" href="#__codelineno-12-110"></a>
+<a id="__codelineno-12-111" name="__codelineno-12-111" href="#__codelineno-12-111"></a><span class="w">  </span><span class="n">enteredPIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<a id="__codelineno-12-112" name="__codelineno-12-112" href="#__codelineno-12-112"></a><span class="w">  </span><span class="n">showIdleScreen</span><span class="p">();</span>
+<a id="__codelineno-12-113" name="__codelineno-12-113" href="#__codelineno-12-113"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>Try it:</strong> The default PIN is <code>1234</code>. Enter <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, then <code>#</code>.</p>
+<p><img alt="video" src="../Images/secsys.gif" /></p>
+<hr />
+<h3 id="why-check-lockout-at-the-very-top-of-loop">Why Check Lockout at the Very Top of <code>loop()</code>?<a class="headerlink" href="#why-check-lockout-at-the-very-top-of-loop" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">LOCKED_OUT</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">lockoutStart</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">LOCKOUT_TIME</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="n">wrongAttempts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="n">resetToIdle</span><span class="p">();</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>This is checked <strong>before</strong> reading the keypad. While locked out, the function
+returns immediately — the keypad is never even read, so <strong>no key press has any
+effect</strong> until the timer expires. This is the same <code>millis()</code>-based non-blocking
+timing pattern used for tracking elapsed time without freezing the program with
+<code>delay()</code>.</p>
+<h3 id="why-is-a-used-for-the-admin-menu-not-a-number">Why Is <code>'A'</code> Used for the Admin Menu, Not a Number?<a class="headerlink" href="#why-is-a-used-for-the-admin-menu-not-a-number" title="Permanent link">&para;</a></h3>
+<p>Numbers <code>0</code>–<code>9</code> are reserved for entering IDs and PINs. The extra keys <code>A</code>, <code>B</code>,
+<code>C</code>, <code>D</code> on a 4×4 keypad are "free" — perfect for menu commands that should never
+be confused with numeric input.</p>
+<h3 id="tracing-an-example-admin-edits-user-3">Tracing an Example: Admin Edits User 3<a class="headerlink" href="#tracing-an-example-admin-edits-user-3" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Admin presses <code>0</code>, <code>#</code> → <code>currentUserID = 0</code>, state → <code>ENTERING_PASSWORD</code></li>
+<li>Admin types <code>9999</code>, <code>#</code> → matches <code>EEPROM_ADMIN_ADDR</code> → <code>showAdminMenu()</code></li>
+<li>Admin presses <code>A</code> → state → <code>ADMIN_SELECT_USER</code>, prompt "User ID (1-10):"</li>
+<li>Admin types <code>3</code>, <code>#</code> → <code>targetUserID = 3</code>, state → <code>ADMIN_NEW_PASSWORD</code></li>
+<li>Admin types <code>5</code>, <code>5</code>, <code>5</code>, <code>5</code>, <code>#</code> →</li>
+<li><code>EEPROM.put(userPasswordAddr(3), 5555)</code></li>
+<li><code>EEPROM.write(userActiveAddr(3), 1)</code></li>
+<li>"User Saved!" → back to <code>ADMIN_MENU</code></li>
+<li>Admin presses <code>*</code> → <code>resetToIdle()</code></li>
+</ol>
+<p>Now User <code>3</code> can log in with PIN <code>5555</code>, even after the Arduino is unplugged
+and plugged back in — because the data lives in EEPROM, not RAM.</p>
+<hr />
+<h2 id="8-exercises-challenges">8. Exercises &amp; Challenges<a class="headerlink" href="#8-exercises-challenges" title="Permanent link">&para;</a></h2>
+<h3 id="exercise-1-change-default-admin-pin">Exercise 1 — Change Default Admin PIN ⭐<a class="headerlink" href="#exercise-1-change-default-admin-pin" title="Permanent link">&para;</a></h3>
+<p>Change <code>DEFAULT_ADMIN_PIN</code> to a 4-digit PIN of your choice. Re-upload the code.</p>
+<p><strong>Question:</strong> Does the new default take effect immediately? Why or why not?
+<em>(Hint: think about <code>EEPROM_MAGIC</code> and the "first run" check.)</em></p>
+<hr />
+<h3 id="exercise-2-add-buzzer-feedback">Exercise 2 — Add Buzzer Feedback ⭐⭐<a class="headerlink" href="#exercise-2-add-buzzer-feedback" title="Permanent link">&para;</a></h3>
+<p>Using <code>tone()</code> and <code>noTone()</code> from Project 04:</p>
+<ul>
+<li>Play a <strong>short high beep</strong> (1500 Hz, 100 ms) on <strong>Access Granted</strong></li>
+<li>Play a <strong>lower, longer beep</strong> (300 Hz, 400 ms) on <strong>Access Denied</strong></li>
+<li>Play <strong>three descending beeps</strong> when entering <code>LOCKED_OUT</code></li>
+</ul>
+<hr />
+<h3 id="exercise-3-lockout-countdown-on-lcd">Exercise 3 — Lockout Countdown on LCD ⭐⭐<a class="headerlink" href="#exercise-3-lockout-countdown-on-lcd" title="Permanent link">&para;</a></h3>
+<p>While <code>state == LOCKED_OUT</code>, update the second line of the LCD every second to
+show a countdown:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Too Many Tries!
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Wait: 27 sec
+</code></pre></div>
+<p><em>Hint: Calculate <code>remaining = (LOCKOUT_TIME - (millis() - lockoutStart)) / 1000</code>
+and only call <code>lcd.print()</code> when this value changes, to avoid constant flickering.</em></p>
+<hr />
+<hr />
+<h3 id="exercise-5-fix-the-leading-zero-pin-problem">Exercise 5 — Fix the Leading-Zero PIN Problem ⭐⭐⭐<a class="headerlink" href="#exercise-5-fix-the-leading-zero-pin-problem" title="Permanent link">&para;</a></h3>
+<p>As discussed in Section 4.8, <code>"0012"</code> and <code>"12"</code> are treated as the same PIN
+because both become <code>12</code> after <code>.toInt()</code>.</p>
+<p>Modify the system to store and compare PINs <strong>as 4-character strings</strong> instead
+of integers, so <code>"0012"</code> and <code>"12"</code> are different PINs.</p>
+<p><em>Hint: <code>EEPROM.put()</code> can store a <code>char[5]</code> array. You'll need to pad shorter
+entries with leading zeros before saving, or require exactly 4 digits before
+accepting <code>#</code>.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/tahafarshbaf/arduino_course" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

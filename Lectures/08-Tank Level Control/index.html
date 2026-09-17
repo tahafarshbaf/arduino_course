@@ -1,0 +1,3176 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner Arduino programming course — Shahid Rajaei University">
+      
+      
+      
+        <link rel="canonical" href="https://tahafarshbaf.github.io/arduino_course/Lectures/08-Tank%20Level%20Control/">
+      
+      
+        <link rel="prev" href="../07-Security%20System/">
+      
+      
+        <link rel="next" href="../09-SpeedMeasurement/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Tank Level Control - Hands on Arduino!</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#project-08-water-tank-level-control-ultrasonic-sensor-dc-motor" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hands on Arduino!" class="md-header__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hands on Arduino!
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tank Level Control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Pre-Course/00-Welcome/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Pre-Course
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../00-Electronics%20Fundamentals/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Lectures
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hands on Arduino!" class="md-nav__button md-logo" aria-label="Hands on Arduino!" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Hands on Arduino!
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/tahafarshbaf/arduino_course" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    tahafarshbaf/arduino_course
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre-Course
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pre-Course
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/00-Welcome/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/01-C-Fundamentals-Primer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Fundamentals Primer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Pre-Course/02-Practice-Problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Practice Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lectures
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lectures
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-Electronics%20Fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Electronics Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-Introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-C%20Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-Blink/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blink
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-Potentiometer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Potentiometer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Fire%20Alarm%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fire Alarm System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Servo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Servo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-Security%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tank Level Control
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tank Level Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-we-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Are We Building?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-components-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Components Needed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Components Needed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srf04-vs-hc-sr04-what-is-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SRF04 vs HC-SR04 — What Is the Difference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Key Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-how-ultrasonic-distance-sensing-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 How Ultrasonic Distance Sensing Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-pulsein-measuring-pulse-duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 pulseIn() — Measuring Pulse Duration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-delaymicroseconds-sub-millisecond-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 delayMicroseconds() — Sub-Millisecond Timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-the-l293d-h-bridge-motor-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 The L293D H-Bridge Motor Driver
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 The L293D H-Bridge Motor Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#l293d-pin-functions-for-one-motor-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L293D Pin Functions (for one motor channel)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-control-truth-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Control Truth Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-pwm-and-analogwrite-for-speed-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 PWM and analogWrite() for Speed Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-water-level-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Water Level Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-hysteresis-why-bang-bang-controllers-need-a-dead-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Hysteresis — Why Bang-Bang Controllers Need a Dead Zone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-library-based-approaches-newping-and-srf04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Library-Based Approaches — NewPing and SRF04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 Library-Based Approaches — NewPing and SRF04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#newping-aka-ping-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewPing (a.k.a. "Ping" library)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srf04-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SRF04 Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#which-should-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which Should You Use?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-hardware-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Hardware Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Hardware Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiring-diagram-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Diagram (Text)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l293d-on-the-breadboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L293D on the Breadboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-hysteresis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Hysteresis?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. The Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1-hysteresis-control-production-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 1 — Hysteresis Control (Production-Ready)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-2-using-the-newping-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 2 — Using the NewPing Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-3-using-the-srf04-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 3 — Using the SRF04 Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-motorstate-is-stored-as-a-global-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why motorState Is Stored as a Global Variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises &amp; Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Exercises &amp; Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-live-percentage-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Live Percentage Display ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-adjustable-motor-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Adjustable Motor Speed ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-overfill-and-empty-alarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Overfill and Empty Alarms ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-sensor-reading-averaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 — Sensor Reading Averaging ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-5-add-i2c-lcd-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 5 — Add I2C LCD Display ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bonus-challenge-data-logging-to-serial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus Challenge — Data Logging to Serial ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-engineering-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Engineering Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-functions-introduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Functions Introduced
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-SpeedMeasurement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Speed Measurement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-DC-Motor-Driver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Motor Driver
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-DHT11-Temperature-Humidity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DHT11 Temperature & Humidity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-Wireless-Communication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wireless Communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-Capstone-Project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capstone Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Refrences/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-what-are-we-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. What Are We Building?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-what-will-you-learn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. What Will You Learn?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-components-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Components Needed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Components Needed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#srf04-vs-hc-sr04-what-is-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SRF04 vs HC-SR04 — What Is the Difference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-key-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Key Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Key Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-how-ultrasonic-distance-sensing-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 How Ultrasonic Distance Sensing Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-pulsein-measuring-pulse-duration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 pulseIn() — Measuring Pulse Duration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-delaymicroseconds-sub-millisecond-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 delayMicroseconds() — Sub-Millisecond Timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-the-l293d-h-bridge-motor-driver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 The L293D H-Bridge Motor Driver
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 The L293D H-Bridge Motor Driver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#l293d-pin-functions-for-one-motor-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L293D Pin Functions (for one motor channel)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#motor-control-truth-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motor Control Truth Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-pwm-and-analogwrite-for-speed-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 PWM and analogWrite() for Speed Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-water-level-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Water Level Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-hysteresis-why-bang-bang-controllers-need-a-dead-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Hysteresis — Why Bang-Bang Controllers Need a Dead Zone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-library-based-approaches-newping-and-srf04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Library-Based Approaches — NewPing and SRF04
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 Library-Based Approaches — NewPing and SRF04">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#newping-aka-ping-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewPing (a.k.a. "Ping" library)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#srf04-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SRF04 Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#which-should-you-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Which Should You Use?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-hardware-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Hardware Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Hardware Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pin Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiring-diagram-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiring Diagram (Text)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l293d-on-the-breadboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L293D on the Breadboard
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-is-hysteresis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Hysteresis?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-the-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. The Code
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. The Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#version-1-hysteresis-control-production-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 1 — Hysteresis Control (Production-Ready)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-2-using-the-newping-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 2 — Using the NewPing Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-3-using-the-srf04-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 3 — Using the SRF04 Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-motorstate-is-stored-as-a-global-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why motorState Is Stored as a Global Variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-exercises-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Exercises &amp; Challenges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Exercises &amp; Challenges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exercise-1-live-percentage-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 1 — Live Percentage Display ⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-2-adjustable-motor-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 2 — Adjustable Motor Speed ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-3-overfill-and-empty-alarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 3 — Overfill and Empty Alarms ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-4-sensor-reading-averaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 4 — Sensor Reading Averaging ⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercise-5-add-i2c-lcd-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercise 5 — Add I2C LCD Display ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bonus-challenge-data-logging-to-serial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bonus Challenge — Data Logging to Serial ⭐⭐⭐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-engineering-connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Engineering Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#new-functions-introduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New Functions Introduced
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/tahafarshbaf/arduino_course/edit/main/Lectures/08-Tank Level Control.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="project-08-water-tank-level-control-ultrasonic-sensor-dc-motor">Project 08 — Water Tank Level Control: Ultrasonic Sensor &amp; DC Motor<a class="headerlink" href="#project-08-water-tank-level-control-ultrasonic-sensor-dc-motor" title="Permanent link">&para;</a></h1>
+<h2 id="1-what-are-we-building">1. What Are We Building?<a class="headerlink" href="#1-what-are-we-building" title="Permanent link">&para;</a></h2>
+<p>We will build an <strong>automatic water tank level controller</strong> — the same type of system
+used in building water towers, irrigation tanks, and industrial reservoirs.</p>
+<p>An <strong>SRF04 ultrasonic sensor</strong> measures the distance from the top of the tank to the
+water surface. From this, Arduino calculates the current water level. A <strong>DC motor
+(pump)</strong> — controlled through an <strong>L293D motor driver</strong> — is turned on when the level
+is too low and turned off when it reaches the target level.</p>
+<p>The key engineering feature is <strong>hysteresis control</strong>: a small "dead zone" around the
+target level that prevents the pump from rapidly switching on and off (chattering) when
+the water surface is near the setpoint — exactly the same technique used in real
+industrial level controllers.</p>
+<hr />
+<h2 id="2-what-will-you-learn">2. What Will You Learn?<a class="headerlink" href="#2-what-will-you-learn" title="Permanent link">&para;</a></h2>
+<p>By the end of this project you will be able to:</p>
+<ul>
+<li>Explain how an <strong>ultrasonic distance sensor</strong> works using the speed of sound</li>
+<li>Use <code>pulseIn()</code> to measure the width of a pulse in microseconds</li>
+<li>Use <code>delayMicroseconds()</code> for precise, sub-millisecond timing</li>
+<li>Understand what an <strong>H-bridge motor driver</strong> (L293D) is and why it is needed</li>
+<li>Control a DC motor's <strong>speed</strong> (PWM via <code>analogWrite()</code>) and <strong>direction</strong> (IN1/IN2 pins)</li>
+<li>Explain <strong>hysteresis</strong> (dead-band control) and why it is essential in real systems</li>
+<li>Use <code>constrain()</code> to clamp sensor readings to a valid physical range</li>
+<li>Understand the difference between <strong>on/off (bang-bang) control</strong> and a future step
+  toward proportional (PID) control</li>
+</ul>
+<hr />
+<h2 id="3-components-needed">3. Components Needed<a class="headerlink" href="#3-components-needed" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Component</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Arduino Uno</td>
+<td>Any compatible clone</td>
+</tr>
+<tr>
+<td>1</td>
+<td>SRF04 Ultrasonic Distance Sensor</td>
+<td>4-pin: VCC, GND, TRIG, ECHO</td>
+</tr>
+<tr>
+<td>1</td>
+<td>L293D Motor Driver IC</td>
+<td>DIP-16 package; mounts on breadboard</td>
+</tr>
+<tr>
+<td>1</td>
+<td>DC Motor</td>
+<td>Represents the water pump</td>
+</tr>
+<tr>
+<td>1</td>
+<td>External power supply (6–12 V)</td>
+<td>Powers the motor through L293D</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Breadboard</td>
+<td>Full-size recommended for L293D</td>
+</tr>
+<tr>
+<td>Several</td>
+<td>Jumper wires</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>USB cable</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="srf04-vs-hc-sr04-what-is-the-difference">SRF04 vs HC-SR04 — What Is the Difference?<a class="headerlink" href="#srf04-vs-hc-sr04-what-is-the-difference" title="Permanent link">&para;</a></h3>
+<p>Both sensors work on the same principle and use the same code. Common differences:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>SRF04</th>
+<th>HC-SR04</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manufacturer</td>
+<td>Devantech (UK)</td>
+<td>Various (China)</td>
+</tr>
+<tr>
+<td>Supply voltage</td>
+<td>5V</td>
+<td>5V</td>
+</tr>
+<tr>
+<td>Trigger pulse</td>
+<td>10 µs HIGH</td>
+<td>10 µs HIGH</td>
+</tr>
+<tr>
+<td>Echo output</td>
+<td>5V logic</td>
+<td>5V logic</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>3 cm – 3 m</td>
+<td>2 cm – 4 m</td>
+</tr>
+<tr>
+<td>Connector</td>
+<td>4-pin header</td>
+<td>4-pin header</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Caution</p>
+<p>The code is <strong>identical</strong> for both sensors. Pin names (TRIG, ECHO) are the same.</p>
+</div>
+<hr />
+<h2 id="4-key-concepts">4. Key Concepts<a class="headerlink" href="#4-key-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="41-how-ultrasonic-distance-sensing-works">4.1 How Ultrasonic Distance Sensing Works<a class="headerlink" href="#41-how-ultrasonic-distance-sensing-works" title="Permanent link">&para;</a></h3>
+<p>The SRF04 measures distance using the <strong>speed of sound</strong>, the same way bats navigate.</p>
+<p><a href="https://www.youtube.com/watch?v=iwD9RiqIHQw"><img alt="HC-SRF" src="https://img.youtube.com/vi/iwD9RiqIHQw/hqdefault.jpg" /></a></p>
+<p><strong>Step-by-step:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. Arduino pulls TRIG HIGH for 10 µs → sensor emits a burst of 8 ultrasonic pulses at 40 kHz
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>2. Sensor pulls ECHO HIGH
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>3. Ultrasonic pulses travel through air, hit the water surface, and reflect back
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>4. When the echo returns, sensor pulls ECHO LOW
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>5. Arduino measures how long ECHO was HIGH (using pulseIn)
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>6. Distance = (time × speed of sound) / 2
+</code></pre></div>
+<p>The division by 2 is because the sound travels <strong>to</strong> the surface and <strong>back</strong> —
+the round-trip distance is twice the actual distance.</p>
+<p><strong>Speed of sound in air at room temperature:</strong> approximately <strong>343 m/s = 0.0343 cm/µs</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>distance (cm) = duration (µs) × 0.034 / 2
+</code></pre></div>
+<h3 id="42-pulsein-measuring-pulse-duration">4.2 <code>pulseIn()</code> — Measuring Pulse Duration<a class="headerlink" href="#42-pulsein-measuring-pulse-duration" title="Permanent link">&para;</a></h3>
+<p><code>pulseIn(pin, state)</code> waits for a pulse to start on a pin, measures how long it
+lasts, and returns the duration in <strong>microseconds (µs)</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">long</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pulseIn</span><span class="p">(</span><span class="n">echoPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// duration is in microseconds (µs), not milliseconds</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pin</code></td>
+<td>Which pin to listen on</td>
+</tr>
+<tr>
+<td><code>HIGH</code></td>
+<td>Wait for the pin to go HIGH, then measure until it goes LOW</td>
+</tr>
+<tr>
+<td>Return value</td>
+<td>Duration in microseconds (µs) as a <code>long</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p><strong>Why <code>long</code> and not <code>int</code>?</strong>  </p>
+<blockquote>
+<p>An <code>int</code> on Arduino holds values up to ~32,767. A 3-meter echo takes ~17,500 µs —
+already close to the limit. <code>long</code> holds up to ~2,147,000,000, making it safe
+for any realistic distance. Always use <code>long</code> for <code>pulseIn()</code> results.</p>
+</blockquote>
+<h3 id="43-delaymicroseconds-sub-millisecond-timing">4.3 <code>delayMicroseconds()</code> — Sub-Millisecond Timing<a class="headerlink" href="#43-delaymicroseconds-sub-millisecond-timing" title="Permanent link">&para;</a></h3>
+<p>The trigger pulse for the SRF04 must be <strong>exactly 10 microseconds</strong> — far too short
+for <code>delay()</code>, which works in milliseconds (1 ms = 1000 µs).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span><span class="w">    </span><span class="c1">// Wait 2 µs</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w">   </span><span class="c1">// Wait 10 µs (trigger pulse duration)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Resolution</th>
+<th>Minimum</th>
+<th>Use For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>delay(ms)</code></td>
+<td>1 ms = 1000 µs</td>
+<td>1 ms</td>
+<td>General pauses</td>
+</tr>
+<tr>
+<td><code>delayMicroseconds(µs)</code></td>
+<td>1 µs</td>
+<td>1 µs</td>
+<td>Sensor trigger pulses, precise timing</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-the-l293d-h-bridge-motor-driver">4.4 The L293D H-Bridge Motor Driver<a class="headerlink" href="#44-the-l293d-h-bridge-motor-driver" title="Permanent link">&para;</a></h3>
+<p>A DC motor needs <strong>much more current</strong> than an Arduino pin can supply (up to ~1 A
+vs. a pin's 40 mA limit). Connecting a motor directly to an Arduino pin would
+permanently damage the pin or the chip.</p>
+<p>An <strong>H-bridge</strong> is a circuit that:
+1. Provides <strong>current amplification</strong> — takes a small Arduino signal and drives
+   a much larger current to the motor
+2. Allows <strong>direction reversal</strong> — by controlling which way current flows</p>
+<p>The <strong>L293D</strong> is one of the most common H-bridge ICs. It can drive <strong>two motors</strong>
+simultaneously and includes <strong>built-in protection diodes</strong> to handle the voltage
+spikes motors produce when switching.</p>
+<h4 id="l293d-pin-functions-for-one-motor-channel">L293D Pin Functions (for one motor channel)<a class="headerlink" href="#l293d-pin-functions-for-one-motor-channel" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>L293D Pin</th>
+<th>Name</th>
+<th>Connect To</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Enable 1 (ENA)</td>
+<td>Arduino PWM pin (e.g., pin 3)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Input 1 (IN1)</td>
+<td>Arduino digital pin (e.g., pin 4)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Input 2 (IN2)</td>
+<td>Arduino digital pin (e.g., pin 5)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Output 1 (OUT1)</td>
+<td>Motor terminal A</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Output 2 (OUT2)</td>
+<td>Motor terminal B</td>
+</tr>
+<tr>
+<td>8</td>
+<td>VS (Motor Power)</td>
+<td>External power supply (+)</td>
+</tr>
+<tr>
+<td>4, 5</td>
+<td>GND</td>
+<td>Common GND</td>
+</tr>
+<tr>
+<td>16</td>
+<td>VSS (Logic Power)</td>
+<td>Arduino 5V</td>
+</tr>
+</tbody>
+</table>
+<h4 id="motor-control-truth-table">Motor Control Truth Table<a class="headerlink" href="#motor-control-truth-table" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>ENA</th>
+<th>IN1</th>
+<th>IN2</th>
+<th>Motor Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>LOW</td>
+<td>Spins forward</td>
+</tr>
+<tr>
+<td>HIGH</td>
+<td>LOW</td>
+<td>HIGH</td>
+<td>Spins backward</td>
+</tr>
+<tr>
+<td>HIGH</td>
+<td>LOW</td>
+<td>LOW</td>
+<td>Brakes (stops quickly)</td>
+</tr>
+<tr>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>HIGH</td>
+<td>Brakes (stops quickly)</td>
+</tr>
+<tr>
+<td>LOW</td>
+<td>any</td>
+<td>any</td>
+<td>Coasts (free spins)</td>
+</tr>
+<tr>
+<td>PWM (0–255)</td>
+<td>HIGH</td>
+<td>LOW</td>
+<td>Forward at variable speed</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Important</p>
+<p><strong>ENA with <code>analogWrite()</code>:</strong> Since ENA accepts PWM, you can control motor
+speed by writing a value from 0 (stopped) to 255 (full speed), just like
+controlling LED brightness — but driving a motor instead.</p>
+</div>
+<h3 id="45-pwm-and-analogwrite-for-speed-control">4.5 PWM and <code>analogWrite()</code> for Speed Control<a class="headerlink" href="#45-pwm-and-analogwrite-for-speed-control" title="Permanent link">&para;</a></h3>
+<p><code>analogWrite(pin, value)</code> outputs a <strong>PWM (Pulse Width Modulation)</strong> signal:
+a rapid on/off square wave where the fraction of time spent HIGH determines the
+effective average voltage delivered.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>value = 0    →  0% duty cycle   →  0 V   average  →  motor stopped
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>value = 127  →  50% duty cycle  →  2.5 V average  →  half speed
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>value = 200  →  78% duty cycle  →  ~4 V  average  →  ~78% speed
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>value = 255  →  100% duty cycle →  5 V   average  →  full speed
+</code></pre></div>
+<p>The motor's speed is (approximately) proportional to the average voltage it receives.
+This lets us run the pump at a <strong>reduced speed</strong> if needed, rather than always at
+full power.</p>
+<h3 id="46-water-level-calculation">4.6 Water Level Calculation<a class="headerlink" href="#46-water-level-calculation" title="Permanent link">&para;</a></h3>
+<p>The sensor mounts at the <strong>top</strong> of the tank, pointing downward at the water surface.
+It measures the <strong>distance to the water surface</strong>, not the water level itself.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Tank top (sensor mounted here)
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>│
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>│  ← distance (what sensor measures)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>│
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>┄┄┄┄  ← water surface
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>│
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>│  ← water level (what we want)
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>│
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>└─── Tank bottom
+</code></pre></div>
+<p>The conversion:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>water level = tank height − distance
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tankHeight</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">distance</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">tankHeight</span><span class="p">);</span>
+</code></pre></div>
+<p><code>constrain(value, min, max)</code> clamps the result:
+- If the sensor reads a noise spike giving <code>distance &gt; tankHeight</code>, <code>waterLevel</code>
+  would go negative — constrain fixes it to 0
+- If the sensor reads 0 (object too close), <code>waterLevel = tankHeight</code> — constrain
+  caps it at the tank height</p>
+<h3 id="47-hysteresis-why-bang-bang-controllers-need-a-dead-zone">4.7 Hysteresis — Why Bang-Bang Controllers Need a Dead Zone<a class="headerlink" href="#47-hysteresis-why-bang-bang-controllers-need-a-dead-zone" title="Permanent link">&para;</a></h3>
+<p>Without hysteresis, a simple on/off controller would behave like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>level &lt; target  →  pump ON   → level rises
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>level = target  →  pump OFF  → level drops slightly
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>level &lt; target  →  pump ON   → level rises again
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>(repeats thousands of times per second)
+</code></pre></div>
+<p>This <strong>rapid switching</strong> (called <strong>chattering</strong>) causes:
+- Electrical noise in the circuit
+- Mechanical wear on the motor and pump
+- Premature component failure</p>
+<p><strong>Hysteresis</strong> adds a <strong>dead zone</strong> (band) around the target:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>level &lt; (target − hysteresis)  →  pump ON   (level is too low)
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>level &gt; (target + hysteresis)  →  pump OFF  (level is high enough)
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>otherwise                       →  no change (stay in current state)
+</code></pre></div>
+<p>With <code>targetLevel = 150.0</code> cm and <code>hysteresis = 2.0</code> cm:
+- Pump turns <strong>ON</strong> when level drops below <strong>148 cm</strong>
+- Pump turns <strong>OFF</strong> when level rises above <strong>152 cm</strong>
+- Between 148–152 cm, the pump <strong>holds its last state</strong> — no switching</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>         152 cm ─── pump OFF threshold
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>          ┆
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>          ┆  ← dead zone (4 cm wide)
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>          ┆
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>         148 cm ─── pump ON threshold
+</code></pre></div>
+<p>This is also called <strong>bang-bang control with hysteresis</strong> in control engineering.
+It is the simplest form of closed-loop automatic control — the same principle used
+in thermostats, refrigerators, and industrial tank controllers.</p>
+<h3 id="48-library-based-approaches-newping-and-srf04">4.8 Library-Based Approaches — NewPing and SRF04<a class="headerlink" href="#48-library-based-approaches-newping-and-srf04" title="Permanent link">&para;</a></h3>
+<p>In Versions 1 and 2, we handle all sensor communication manually: toggling TRIG,
+calling <code>pulseIn()</code>, and converting duration to centimeters ourselves. This teaches
+the underlying physics clearly — but in real projects, <strong>dedicated libraries</strong> handle
+all of this in a single function call, making code shorter and less error-prone.</p>
+<p>Two popular libraries for ultrasonic sensors are:</p>
+<h4 id="newping-aka-ping-library">NewPing (a.k.a. "Ping" library)<a class="headerlink" href="#newping-aka-ping-library" title="Permanent link">&para;</a></h4>
+<p><strong>Author:</strong> Tim Eckel<br />
+<strong>Install:</strong> Library Manager → search <code>NewPing</code></p>
+<p>NewPing supports a wide range of ultrasonic sensors (HC-SR04, SRF04, SRF05, etc.)
+and adds useful features the manual approach lacks:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Manual (<code>pulseIn</code>)</th>
+<th>NewPing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timeout handling</td>
+<td><code>pulseIn</code> blocks until echo or timeout</td>
+<td>Built-in; returns 0 if out of range</td>
+</tr>
+<tr>
+<td>Median filter</td>
+<td>Must implement yourself</td>
+<td><code>ping_median(n)</code> — takes n readings, returns median</td>
+</tr>
+<tr>
+<td>Distance unit</td>
+<td>Must calculate: <code>duration × 0.034 / 2</code></td>
+<td><code>ping_cm()</code> returns cm directly</td>
+</tr>
+<tr>
+<td>Non-blocking mode</td>
+<td>Not available</td>
+<td><code>ping_timer()</code> with interrupt callback</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;NewPing.h&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">NewPing</span><span class="w"> </span><span class="nf">sonar</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">MAX_DISTANCE</span><span class="p">);</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sonar</span><span class="p">.</span><span class="n">ping_cm</span><span class="p">();</span><span class="w">       </span><span class="c1">// single reading in cm (0 = no echo / out of range)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="kt">float</span><span class="w"> </span><span class="n">median</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">sonar</span><span class="p">.</span><span class="n">ping_median</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span><span class="w">  </span><span class="c1">// 5-reading median in µs — divide by 57 for cm</span>
+</code></pre></div>
+<h4 id="srf04-library">SRF04 Library<a class="headerlink" href="#srf04-library" title="Permanent link">&para;</a></h4>
+<p><strong>Author:</strong> Garfield Lee<br />
+<strong>Install:</strong> Library Manager → search <code>SRF04</code></p>
+<p>This library is written specifically for <strong>Devantech SRF-series sensors</strong> (SRF04,
+SRF05). Its API is even simpler than NewPing — a single object and a single method:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;SRF04.h&gt;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">SRF04</span><span class="w"> </span><span class="nf">srf</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="p">);</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">srf</span><span class="p">.</span><span class="n">getDistance</span><span class="p">();</span><span class="w">    </span><span class="c1">// returns distance in cm</span>
+</code></pre></div>
+<p>The library internally handles the trigger pulse and <code>pulseIn()</code> call, but does
+not include median filtering or non-blocking modes. It is ideal when you want the
+<strong>minimum possible code</strong> for a Devantech sensor.</p>
+<h4 id="which-should-you-use">Which Should You Use?<a class="headerlink" href="#which-should-you-use" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning — understanding the sensor physics</td>
+<td>Manual (<code>pulseIn</code>) — Versions 1 &amp; 2</td>
+</tr>
+<tr>
+<td>Fast prototyping with any ultrasonic sensor</td>
+<td>NewPing — Version 3</td>
+</tr>
+<tr>
+<td>Simple project with SRF04 specifically</td>
+<td>SRF04 library — Version 4</td>
+</tr>
+<tr>
+<td>Noisy environment, need averaging</td>
+<td>NewPing (<code>ping_median()</code>)</td>
+</tr>
+<tr>
+<td>Non-blocking / interrupt-driven systems</td>
+<td>NewPing (<code>ping_timer()</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-hardware-setup">5. Hardware Setup<a class="headerlink" href="#5-hardware-setup" title="Permanent link">&para;</a></h2>
+<h3 id="pin-connections">Pin Connections<a class="headerlink" href="#pin-connections" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Arduino Pin</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SRF04 TRIG</td>
+<td>9</td>
+<td>Digital output</td>
+</tr>
+<tr>
+<td>SRF04 ECHO</td>
+<td>10</td>
+<td>Digital input</td>
+</tr>
+<tr>
+<td>SRF04 VCC</td>
+<td>5V</td>
+<td></td>
+</tr>
+<tr>
+<td>SRF04 GND</td>
+<td>GND</td>
+<td></td>
+</tr>
+<tr>
+<td>L293D ENA (pin 1)</td>
+<td>3</td>
+<td>PWM output — controls motor speed</td>
+</tr>
+<tr>
+<td>L293D IN1 (pin 2)</td>
+<td>4</td>
+<td>Direction control</td>
+</tr>
+<tr>
+<td>L293D IN2 (pin 7)</td>
+<td>5</td>
+<td>Direction control</td>
+</tr>
+<tr>
+<td>L293D VSS (pin 16)</td>
+<td>5V</td>
+<td>Logic power</td>
+</tr>
+<tr>
+<td>L293D VS (pin 8)</td>
+<td>External supply (+)</td>
+<td>Motor power (not Arduino 5V!)</td>
+</tr>
+<tr>
+<td>L293D GND (pins 4, 5)</td>
+<td>GND (common)</td>
+<td></td>
+</tr>
+<tr>
+<td>Motor A</td>
+<td>L293D OUT1 (pin 3)</td>
+<td></td>
+</tr>
+<tr>
+<td>Motor B</td>
+<td>L293D OUT2 (pin 6)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="wiring-diagram-text">Wiring Diagram (Text)<a class="headerlink" href="#wiring-diagram-text" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Arduino                   SRF04
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>────────                ──────────
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a> Pin 9  ─────────────── TRIG
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a> Pin 10 ─────────────── ECHO
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a> 5V     ─────────────── VCC
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a> GND    ─────────────── GND
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>Arduino                   L293D (DIP-16)
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>────────                ──────────────────
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a> Pin 3  ─────────────── Pin 1  (ENA)       ← PWM speed
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a> Pin 4  ─────────────── Pin 2  (IN1)       ← direction
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a> Pin 5  ─────────────── Pin 7  (IN2)       ← direction
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a> 5V     ─────────────── Pin 16 (VSS)       ← logic power
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a> GND  ──┬────────────── Pin 4,5 (GND)
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>        │
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>External supply (–) ──── GND (common)
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>External supply (+) ──── Pin 8 (VS)        ← motor power
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>L293D                     DC Motor
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>──────────               ──────────
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a> Pin 3 (OUT1) ─────────── Terminal A
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a> Pin 6 (OUT2) ─────────── Terminal B
+</code></pre></div>
+<h3 id="l293d-on-the-breadboard">L293D on the Breadboard<a class="headerlink" href="#l293d-on-the-breadboard" title="Permanent link">&para;</a></h3>
+<p>The L293D is a 16-pin DIP IC. Mount it <strong>straddling the center channel</strong> of the
+breadboard so the two rows of pins land on opposite sides — this is the correct
+way to mount any DIP IC and gives you access to all pins.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>     ┌────────────────┐
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Pin 1 │ENA        VCC│ Pin 16
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Pin 2 │IN1        IN4│ Pin 15
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>Pin 3 │OUT1      OUT4│ Pin 14
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Pin 4 │GND        IN3│ Pin 13
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>Pin 5 │GND       OUT3│ Pin 12
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>Pin 6 │OUT2       GND│ Pin 11
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>Pin 7 │IN2        GND│ Pin 10
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>Pin 8 │VS         ENA│ Pin 9
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>     └────────────────┘
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>       (top view, notch at top)
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>We only use the <strong>left channel</strong> (pins 1–8) for one motor.</p>
+<blockquote>
+<p>Pins 9–16 control a second motor and can be left unconnected.</p>
+</blockquote>
+<h3 id="what-is-hysteresis">What is Hysteresis?<a class="headerlink" href="#what-is-hysteresis" title="Permanent link">&para;</a></h3>
+<p><img alt="hysteresis" src="../Images/hysteresis.png" /></p>
+<h2 id="6-the-code">6. The Code<a class="headerlink" href="#6-the-code" title="Permanent link">&para;</a></h2>
+<h3 id="version-1-hysteresis-control-production-ready">Version 1 — Hysteresis Control (Production-Ready)<a class="headerlink" href="#version-1-hysteresis-control-production-ready" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// ── Pin Definitions ──────────────────────────────────────────</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">TRIG_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ENABLE_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">    </span><span class="c1">// Must be a PWM pin (~)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN1_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN2_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1">// ── Tank Parameters ───────────────────────────────────────────</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="p">;</span><span class="w">   </span><span class="c1">// cm — height of tank (simulated: 30 cm scale to 300 cm)</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">150.0</span><span class="p">;</span><span class="w">   </span><span class="c1">// cm — desired water level (50% full)</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span><span class="w">     </span><span class="c1">// cm — dead zone half-width</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">MOTOR_SPEED</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span><span class="w">     </span><span class="c1">// PWM value 0–255 for pump speed</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="c1">// ── State variable ─────────────────────────────────────────────</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="kt">bool</span><span class="w"> </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">             </span><span class="c1">// false = OFF, true = ON</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w">   </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w">   </span><span class="n">INPUT</span><span class="p">);</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a><span class="w">  </span><span class="c1">// Motor OFF at startup</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="w">  </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"=== Tank Level Controller with Hysteresis ==="</span><span class="p">);</span>
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Target: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="p">);</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm | ON below: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">);</span>
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm | OFF above: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">);</span>
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"─────────────────────────────────────────────"</span><span class="p">);</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="p">}</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">measureDistance</span><span class="p">();</span>
+<a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calculateWaterLevel</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span>
+<a id="__codelineno-15-42" name="__codelineno-15-42" href="#__codelineno-15-42"></a>
+<a id="__codelineno-15-43" name="__codelineno-15-43" href="#__codelineno-15-43"></a><span class="w">  </span><span class="n">printStatus</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-15-44" name="__codelineno-15-44" href="#__codelineno-15-44"></a><span class="w">  </span><span class="n">controlPump</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-15-45" name="__codelineno-15-45" href="#__codelineno-15-45"></a>
+<a id="__codelineno-15-46" name="__codelineno-15-46" href="#__codelineno-15-46"></a><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-15-47" name="__codelineno-15-47" href="#__codelineno-15-47"></a><span class="p">}</span>
+<a id="__codelineno-15-48" name="__codelineno-15-48" href="#__codelineno-15-48"></a>
+<a id="__codelineno-15-49" name="__codelineno-15-49" href="#__codelineno-15-49"></a><span class="c1">// ── Measure distance with SRF04 ───────────────────────────────</span>
+<a id="__codelineno-15-50" name="__codelineno-15-50" href="#__codelineno-15-50"></a><span class="kt">float</span><span class="w"> </span><span class="nf">measureDistance</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-51" name="__codelineno-15-51" href="#__codelineno-15-51"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-52" name="__codelineno-15-52" href="#__codelineno-15-52"></a><span class="w">  </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-15-53" name="__codelineno-15-53" href="#__codelineno-15-53"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-15-54" name="__codelineno-15-54" href="#__codelineno-15-54"></a><span class="w">  </span><span class="n">delayMicroseconds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<a id="__codelineno-15-55" name="__codelineno-15-55" href="#__codelineno-15-55"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-56" name="__codelineno-15-56" href="#__codelineno-15-56"></a>
+<a id="__codelineno-15-57" name="__codelineno-15-57" href="#__codelineno-15-57"></a><span class="w">  </span><span class="kt">long</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pulseIn</span><span class="p">(</span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-15-58" name="__codelineno-15-58" href="#__codelineno-15-58"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.034</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span><span class="w">   </span><span class="c1">// µs → cm</span>
+<a id="__codelineno-15-59" name="__codelineno-15-59" href="#__codelineno-15-59"></a><span class="p">}</span>
+<a id="__codelineno-15-60" name="__codelineno-15-60" href="#__codelineno-15-60"></a>
+<a id="__codelineno-15-61" name="__codelineno-15-61" href="#__codelineno-15-61"></a><span class="c1">// ── Convert distance to water level ──────────────────────────</span>
+<a id="__codelineno-15-62" name="__codelineno-15-62" href="#__codelineno-15-62"></a><span class="kt">float</span><span class="w"> </span><span class="nf">calculateWaterLevel</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-63" name="__codelineno-15-63" href="#__codelineno-15-63"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">distance</span><span class="p">;</span>
+<a id="__codelineno-15-64" name="__codelineno-15-64" href="#__codelineno-15-64"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">level</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">);</span>
+<a id="__codelineno-15-65" name="__codelineno-15-65" href="#__codelineno-15-65"></a><span class="p">}</span>
+<a id="__codelineno-15-66" name="__codelineno-15-66" href="#__codelineno-15-66"></a>
+<a id="__codelineno-15-67" name="__codelineno-15-67" href="#__codelineno-15-67"></a><span class="c1">// ── Hysteresis control logic ──────────────────────────────────</span>
+<a id="__codelineno-15-68" name="__codelineno-15-68" href="#__codelineno-15-68"></a><span class="kt">void</span><span class="w"> </span><span class="nf">controlPump</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-69" name="__codelineno-15-69" href="#__codelineno-15-69"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-70" name="__codelineno-15-70" href="#__codelineno-15-70"></a><span class="w">    </span><span class="c1">// Level too low → turn pump ON</span>
+<a id="__codelineno-15-71" name="__codelineno-15-71" href="#__codelineno-15-71"></a><span class="w">    </span><span class="n">motorOn</span><span class="p">();</span>
+<a id="__codelineno-15-72" name="__codelineno-15-72" href="#__codelineno-15-72"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-15-73" name="__codelineno-15-73" href="#__codelineno-15-73"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: ON  (filling)"</span><span class="p">);</span>
+<a id="__codelineno-15-74" name="__codelineno-15-74" href="#__codelineno-15-74"></a>
+<a id="__codelineno-15-75" name="__codelineno-15-75" href="#__codelineno-15-75"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-76" name="__codelineno-15-76" href="#__codelineno-15-76"></a><span class="w">    </span><span class="c1">// Level high enough → turn pump OFF</span>
+<a id="__codelineno-15-77" name="__codelineno-15-77" href="#__codelineno-15-77"></a><span class="w">    </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-15-78" name="__codelineno-15-78" href="#__codelineno-15-78"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-15-79" name="__codelineno-15-79" href="#__codelineno-15-79"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: OFF (target reached)"</span><span class="p">);</span>
+<a id="__codelineno-15-80" name="__codelineno-15-80" href="#__codelineno-15-80"></a>
+<a id="__codelineno-15-81" name="__codelineno-15-81" href="#__codelineno-15-81"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-82" name="__codelineno-15-82" href="#__codelineno-15-82"></a><span class="w">    </span><span class="c1">// Inside dead zone → hold current state, no change</span>
+<a id="__codelineno-15-83" name="__codelineno-15-83" href="#__codelineno-15-83"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Pump: HOLD (in dead zone) — currently "</span><span class="p">);</span>
+<a id="__codelineno-15-84" name="__codelineno-15-84" href="#__codelineno-15-84"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">motorState</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"ON"</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"OFF"</span><span class="p">);</span>
+<a id="__codelineno-15-85" name="__codelineno-15-85" href="#__codelineno-15-85"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-15-86" name="__codelineno-15-86" href="#__codelineno-15-86"></a><span class="p">}</span>
+<a id="__codelineno-15-87" name="__codelineno-15-87" href="#__codelineno-15-87"></a>
+<a id="__codelineno-15-88" name="__codelineno-15-88" href="#__codelineno-15-88"></a><span class="c1">// ── Motor control helpers ─────────────────────────────────────</span>
+<a id="__codelineno-15-89" name="__codelineno-15-89" href="#__codelineno-15-89"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOn</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-90" name="__codelineno-15-90" href="#__codelineno-15-90"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<a id="__codelineno-15-91" name="__codelineno-15-91" href="#__codelineno-15-91"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-92" name="__codelineno-15-92" href="#__codelineno-15-92"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">MOTOR_SPEED</span><span class="p">);</span>
+<a id="__codelineno-15-93" name="__codelineno-15-93" href="#__codelineno-15-93"></a><span class="p">}</span>
+<a id="__codelineno-15-94" name="__codelineno-15-94" href="#__codelineno-15-94"></a>
+<a id="__codelineno-15-95" name="__codelineno-15-95" href="#__codelineno-15-95"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOff</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-96" name="__codelineno-15-96" href="#__codelineno-15-96"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-97" name="__codelineno-15-97" href="#__codelineno-15-97"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-15-98" name="__codelineno-15-98" href="#__codelineno-15-98"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-15-99" name="__codelineno-15-99" href="#__codelineno-15-99"></a><span class="p">}</span>
+<a id="__codelineno-15-100" name="__codelineno-15-100" href="#__codelineno-15-100"></a>
+<a id="__codelineno-15-101" name="__codelineno-15-101" href="#__codelineno-15-101"></a><span class="c1">// ── Serial status print ───────────────────────────────────────</span>
+<a id="__codelineno-15-102" name="__codelineno-15-102" href="#__codelineno-15-102"></a><span class="kt">void</span><span class="w"> </span><span class="nf">printStatus</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-103" name="__codelineno-15-103" href="#__codelineno-15-103"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">levelPercent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">;</span>
+<a id="__codelineno-15-104" name="__codelineno-15-104" href="#__codelineno-15-104"></a>
+<a id="__codelineno-15-105" name="__codelineno-15-105" href="#__codelineno-15-105"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Dist: "</span><span class="p">);</span><span class="w">      </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm | "</span><span class="p">);</span>
+<a id="__codelineno-15-106" name="__codelineno-15-106" href="#__codelineno-15-106"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Level: "</span><span class="p">);</span><span class="w">     </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm ("</span><span class="p">);</span>
+<a id="__codelineno-15-107" name="__codelineno-15-107" href="#__codelineno-15-107"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">levelPercent</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"%) | "</span><span class="p">);</span>
+<a id="__codelineno-15-108" name="__codelineno-15-108" href="#__codelineno-15-108"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="version-2-using-the-newping-library">Version 2 — Using the NewPing Library<a class="headerlink" href="#version-2-using-the-newping-library" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Install first:</strong> Sketch → Include Library → Manage Libraries → search <code>NewPing</code> → Install</p>
+</blockquote>
+<p>The control logic is identical to Version 2. Only <code>measureDistance()</code> changes —
+everything else (hysteresis, motor control, Serial output) stays exactly the same.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;NewPing.h&gt;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="c1">// ── Pin Definitions ──────────────────────────────────────────</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">TRIG_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ENABLE_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN1_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN2_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1">// ── Tank Parameters ───────────────────────────────────────────</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="p">;</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">150.0</span><span class="p">;</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">   </span><span class="n">MOTOR_SPEED</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">   </span><span class="n">MAX_DISTANCE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">400</span><span class="p">;</span><span class="w">    </span><span class="c1">// cm — NewPing ignores echoes beyond this</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="c1">// ── NewPing object ────────────────────────────────────────────</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="n">NewPing</span><span class="w"> </span><span class="nf">sonar</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">MAX_DISTANCE</span><span class="p">);</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="kt">bool</span><span class="w"> </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">  </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>
+<a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"=== Tank Controller — NewPing Library ==="</span><span class="p">);</span>
+<a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="p">}</span>
+<a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a>
+<a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="w">  </span><span class="c1">// ── NewPing: single reading in cm ────────────────────────</span>
+<a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="w">  </span><span class="c1">// Returns 0 if no echo received (out of range or no object)</span>
+<a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sonar</span><span class="p">.</span><span class="n">ping_cm</span><span class="p">();</span>
+<a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a>
+<a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"WARNING: No echo — sensor out of range or object too close."</span><span class="p">);</span>
+<a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="w">    </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="w">    </span><span class="k">return</span><span class="p">;</span><span class="w">   </span><span class="c1">// Skip this cycle; do not change motor state</span>
+<a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a>
+<a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">TANK_HEIGHT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">);</span>
+<a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="w">  </span><span class="n">printStatus</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="w">  </span><span class="n">controlPump</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a>
+<a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="p">}</span>
+<a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a>
+<a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a><span class="c1">// ── Hysteresis control (unchanged from Version 2) ─────────────</span>
+<a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="kt">void</span><span class="w"> </span><span class="nf">controlPump</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="w">    </span><span class="n">motorOn</span><span class="p">();</span>
+<a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: ON  (filling)"</span><span class="p">);</span>
+<a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="w">    </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: OFF (target reached)"</span><span class="p">);</span>
+<a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Pump: HOLD — currently "</span><span class="p">);</span>
+<a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">motorState</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"ON"</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"OFF"</span><span class="p">);</span>
+<a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a><span class="p">}</span>
+<a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a>
+<a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOn</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w"> </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">MOTOR_SPEED</span><span class="p">);</span>
+<a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a><span class="p">}</span>
+<a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a>
+<a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOff</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w"> </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a><span class="p">}</span>
+<a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a>
+<a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a><span class="kt">void</span><span class="w"> </span><span class="nf">printStatus</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-79" name="__codelineno-16-79" href="#__codelineno-16-79"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Dist: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-16-80" name="__codelineno-16-80" href="#__codelineno-16-80"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm | Level: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-16-81" name="__codelineno-16-81" href="#__codelineno-16-81"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm ("</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-16-82" name="__codelineno-16-82" href="#__codelineno-16-82"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"%) | "</span><span class="p">);</span>
+<a id="__codelineno-16-83" name="__codelineno-16-83" href="#__codelineno-16-83"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>What NewPing adds over the manual approach:</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">// Manual Version 2: if pulseIn times out, it blocks for up to 23 ms, </span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1">// returns a huge duration, and the code silently computes a wrong distance.</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1">// NewPing Version 3: timeout is handled internally.</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1">// Returns 0 cleanly, and we handle it explicitly with an if-check.</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sonar</span><span class="p">.</span><span class="n">ping_cm</span><span class="p">();</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">distance</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="cm">/* handle gracefully */</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><strong>Bonus — Noise reduction with median filter:</strong></p>
+<p>Replace the single <code>ping_cm()</code> call with a median of 5 readings:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// Takes 5 readings, sorts them, returns the middle value in µs</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">medianUs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sonar</span><span class="p">.</span><span class="n">ping_median</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">medianUs</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">57.0</span><span class="p">;</span><span class="w">   </span><span class="c1">// convert µs to cm (÷ 57 ≈ × 0.034 / 2 × 1000)</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1">// or equivalently, using NewPing's built-in converter:</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewPing</span><span class="o">::</span><span class="n">convert_cm</span><span class="p">(</span><span class="n">medianUs</span><span class="p">);</span>
+</code></pre></div>
+<p>This eliminates most noise spikes from surface ripples or electrical interference
+without any extra code on your part.</p>
+<hr />
+<h3 id="version-3-using-the-srf04-library">Version 3 — Using the SRF04 Library<a class="headerlink" href="#version-3-using-the-srf04-library" title="Permanent link">&para;</a></h3>
+<p>This is the most concise version. The SRF04 library reduces all sensor communication
+to a single method call and is purpose-built for Devantech SRF-series sensors.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;SRF04.h&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1">// ── Pin Definitions ──────────────────────────────────────────</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">TRIG_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">ENABLE_PIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN1_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">IN2_PIN</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="c1">// ── Tank Parameters ───────────────────────────────────────────</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mf">300.0</span><span class="p">;</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">150.0</span><span class="p">;</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0</span><span class="p">;</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w">   </span><span class="n">MOTOR_SPEED</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a><span class="c1">// ── SRF04 object ─────────────────────────────────────────────</span>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="n">SRF04</span><span class="w"> </span><span class="nf">srf</span><span class="p">(</span><span class="n">TRIG_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">ECHO_PIN</span><span class="p">);</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="kt">bool</span><span class="w"> </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">  </span><span class="n">pinMode</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w">    </span><span class="n">OUTPUT</span><span class="p">);</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">  </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"=== Tank Controller — SRF04 Library ==="</span><span class="p">);</span>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="p">}</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="c1">// ─────────────────────────────────────────────────────────────</span>
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a><span class="w">  </span><span class="c1">// ── SRF04 library: one line, returns distance in cm ──────</span>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">srf</span><span class="p">.</span><span class="n">getDistance</span><span class="p">();</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a>
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">constrain</span><span class="p">(</span><span class="n">TANK_HEIGHT</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">);</span>
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="w">  </span><span class="n">printStatus</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="w">  </span><span class="n">controlPump</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">);</span>
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a>
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a><span class="w">  </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span>
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a><span class="p">}</span>
+<a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a>
+<a id="__codelineno-19-44" name="__codelineno-19-44" href="#__codelineno-19-44"></a><span class="c1">// ── Hysteresis control (unchanged from Version 2) ─────────────</span>
+<a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a><span class="kt">void</span><span class="w"> </span><span class="nf">controlPump</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-47" name="__codelineno-19-47" href="#__codelineno-19-47"></a><span class="w">    </span><span class="n">motorOn</span><span class="p">();</span>
+<a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-19-49" name="__codelineno-19-49" href="#__codelineno-19-49"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: ON  (filling)"</span><span class="p">);</span>
+<a id="__codelineno-19-50" name="__codelineno-19-50" href="#__codelineno-19-50"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">TARGET_LEVEL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">HYSTERESIS</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-51" name="__codelineno-19-51" href="#__codelineno-19-51"></a><span class="w">    </span><span class="n">motorOff</span><span class="p">();</span>
+<a id="__codelineno-19-52" name="__codelineno-19-52" href="#__codelineno-19-52"></a><span class="w">    </span><span class="n">motorState</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-19-53" name="__codelineno-19-53" href="#__codelineno-19-53"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Pump: OFF (target reached)"</span><span class="p">);</span>
+<a id="__codelineno-19-54" name="__codelineno-19-54" href="#__codelineno-19-54"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-55" name="__codelineno-19-55" href="#__codelineno-19-55"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Pump: HOLD — currently "</span><span class="p">);</span>
+<a id="__codelineno-19-56" name="__codelineno-19-56" href="#__codelineno-19-56"></a><span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">motorState</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"ON"</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"OFF"</span><span class="p">);</span>
+<a id="__codelineno-19-57" name="__codelineno-19-57" href="#__codelineno-19-57"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-19-58" name="__codelineno-19-58" href="#__codelineno-19-58"></a><span class="p">}</span>
+<a id="__codelineno-19-59" name="__codelineno-19-59" href="#__codelineno-19-59"></a>
+<a id="__codelineno-19-60" name="__codelineno-19-60" href="#__codelineno-19-60"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOn</span><span class="p">()</span><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-19-61" name="__codelineno-19-61" href="#__codelineno-19-61"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span><span class="w"> </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-19-62" name="__codelineno-19-62" href="#__codelineno-19-62"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">MOTOR_SPEED</span><span class="p">);</span>
+<a id="__codelineno-19-63" name="__codelineno-19-63" href="#__codelineno-19-63"></a><span class="p">}</span>
+<a id="__codelineno-19-64" name="__codelineno-19-64" href="#__codelineno-19-64"></a>
+<a id="__codelineno-19-65" name="__codelineno-19-65" href="#__codelineno-19-65"></a><span class="kt">void</span><span class="w"> </span><span class="nf">motorOff</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-66" name="__codelineno-19-66" href="#__codelineno-19-66"></a><span class="w">  </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN1_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span><span class="w"> </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">IN2_PIN</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<a id="__codelineno-19-67" name="__codelineno-19-67" href="#__codelineno-19-67"></a><span class="w">  </span><span class="n">analogWrite</span><span class="p">(</span><span class="n">ENABLE_PIN</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-19-68" name="__codelineno-19-68" href="#__codelineno-19-68"></a><span class="p">}</span>
+<a id="__codelineno-19-69" name="__codelineno-19-69" href="#__codelineno-19-69"></a>
+<a id="__codelineno-19-70" name="__codelineno-19-70" href="#__codelineno-19-70"></a><span class="kt">void</span><span class="w"> </span><span class="nf">printStatus</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">waterLevel</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-71" name="__codelineno-19-71" href="#__codelineno-19-71"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Dist: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-19-72" name="__codelineno-19-72" href="#__codelineno-19-72"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm | Level: "</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">waterLevel</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-19-73" name="__codelineno-19-73" href="#__codelineno-19-73"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">" cm ("</span><span class="p">);</span><span class="w"> </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">((</span><span class="n">waterLevel</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">TANK_HEIGHT</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">100.0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-19-74" name="__codelineno-19-74" href="#__codelineno-19-74"></a><span class="w">  </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"%) | "</span><span class="p">);</span>
+<a id="__codelineno-19-75" name="__codelineno-19-75" href="#__codelineno-19-75"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="why-motorstate-is-stored-as-a-global-variable">Why <code>motorState</code> Is Stored as a Global Variable<a class="headerlink" href="#why-motorstate-is-stored-as-a-global-variable" title="Permanent link">&para;</a></h3>
+<p>In Version 1, <code>motorState</code> is never used to decide whether to run or stop the motor —
+<code>controlPump()</code> calls <code>motorOn()</code> and <code>motorOff()</code> directly. So why keep it?</p>
+<p>It is used <strong>only for display</strong> in the dead-zone branch:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">motorState</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"ON"</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"OFF"</span><span class="p">);</span>
+</code></pre></div>
+<p>This tells us what the pump is actually doing while the controller is holding
+state. Without this variable, we could not print the pump's current condition
+from within the "no change" branch.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+</div>
+<p><strong>Ternary operator <code>? :</code></strong> — a compact <code>if/else</code> for expressions:</p>
+<blockquote>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">motorState</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="s">"ON"</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s">"OFF"</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1">// if motorState is true → "ON", else → "OFF"</span>
+</code></pre></div>
+Equivalent to:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">motorState</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">"ON"</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="s">"OFF"</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div></p>
+</blockquote>
+<h2 id="8-exercises-challenges">8. Exercises &amp; Challenges<a class="headerlink" href="#8-exercises-challenges" title="Permanent link">&para;</a></h2>
+<h3 id="exercise-1-live-percentage-display">Exercise 1 — Live Percentage Display ⭐<a class="headerlink" href="#exercise-1-live-percentage-display" title="Permanent link">&para;</a></h3>
+<p>Modify <code>printStatus()</code> to also draw a simple bar in the Serial Monitor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Level: 143.2 cm (48%) [████████░░░░░░░░░░░░]
+</code></pre></div>
+<p>Use a <code>for</code> loop to print <code>█</code> for every 5% of fill level and <code>░</code> for the remainder.
+<em>(Total 20 characters = 100% / 5% per character)</em></p>
+<hr />
+<h3 id="exercise-2-adjustable-motor-speed">Exercise 2 — Adjustable Motor Speed ⭐⭐<a class="headerlink" href="#exercise-2-adjustable-motor-speed" title="Permanent link">&para;</a></h3>
+<p>Currently the pump always runs at <code>MOTOR_SPEED = 200</code>. Modify the code so the
+pump speed <strong>depends on how far below the target the level is</strong>:</p>
+<ul>
+<li>Level is 5+ cm below target → full speed (255)</li>
+<li>Level is 2–5 cm below target → medium speed (150)</li>
+<li>Level is 0–2 cm below target → slow speed (80)</li>
+</ul>
+<p><em>Hint: Add <code>else if</code> conditions inside <code>controlPump()</code> and change the argument passed to <code>motorOn()</code>.</em></p>
+<hr />
+<h3 id="exercise-3-overfill-and-empty-alarms">Exercise 3 — Overfill and Empty Alarms ⭐⭐<a class="headerlink" href="#exercise-3-overfill-and-empty-alarms" title="Permanent link">&para;</a></h3>
+<p>Add two safety thresholds:</p>
+<table>
+<thead>
+<tr>
+<th>Threshold</th>
+<th>Level</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EMPTY</strong></td>
+<td>&lt; 5% of tank height</td>
+<td>Print "CRITICAL: Tank almost empty!" and force pump ON at full speed</td>
+</tr>
+<tr>
+<td><strong>OVERFILL</strong></td>
+<td>&gt; 95% of tank height</td>
+<td>Print "CRITICAL: Overfill!" and force pump OFF</td>
+</tr>
+</tbody>
+</table>
+<p>These safety limits should <strong>override</strong> the hysteresis logic when triggered.</p>
+<hr />
+<h3 id="exercise-4-sensor-reading-averaging">Exercise 4 — Sensor Reading Averaging ⭐⭐<a class="headerlink" href="#exercise-4-sensor-reading-averaging" title="Permanent link">&para;</a></h3>
+<p>A single ultrasonic reading can be noisy (air currents, ripples on water surface).
+Modify <code>measureDistance()</code> to <strong>take 5 readings</strong> and return their <strong>average</strong>,
+discarding the highest and lowest values (a technique called <strong>trimmed mean</strong>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// Read 5 times, sort, average the middle 3</span>
+</code></pre></div>
+<p><em>Hint: Store readings in a <code>float</code> array, sort with bubble sort (from the MATLAB course!), then average indices 1, 2, 3.</em></p>
+<hr />
+<h3 id="exercise-5-add-i2c-lcd-display">Exercise 5 — Add I2C LCD Display ⭐⭐⭐<a class="headerlink" href="#exercise-5-add-i2c-lcd-display" title="Permanent link">&para;</a></h3>
+<p>Connect the 16×2 I2C LCD from Project 07 and show:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Level: 143 cm 48%
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Pump: ON  [FILLING]
+</code></pre></div>
+<p>Update the LCD only when the displayed value changes (to reduce flicker and
+EEPROM-style wear on the display driver).</p>
+<p><em>Hint: Store the last displayed level as a global variable and only call
+<code>lcd.clear()</code> + redraw when <code>abs(waterLevel - lastDisplayedLevel) &gt; 0.5</code>.</em></p>
+<hr />
+<h3 id="bonus-challenge-data-logging-to-serial">Bonus Challenge — Data Logging to Serial ⭐⭐⭐<a class="headerlink" href="#bonus-challenge-data-logging-to-serial" title="Permanent link">&para;</a></h3>
+<p>Add a timestamp using <code>millis()</code> to each Serial Monitor line:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>[00:02:14] Dist: 17.3 cm | Level: 12.7 cm (42%) | Pump: ON (filling)
+</code></pre></div>
+<p>Format <code>millis()</code> into minutes and seconds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">t</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">sec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w">  </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span>
+</code></pre></div>
+<hr />
+<h3 id="control-engineering-connection">Control Engineering Connection<a class="headerlink" href="#control-engineering-connection" title="Permanent link">&para;</a></h3>
+<p>The system you built is a <strong>bang-bang controller with hysteresis</strong> — the simplest
+form of feedback control. In control engineering terms:</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What It Is in This Project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Process Variable (PV)</strong></td>
+<td>Measured water level</td>
+</tr>
+<tr>
+<td><strong>Setpoint (SP)</strong></td>
+<td><code>TARGET_LEVEL</code></td>
+</tr>
+<tr>
+<td><strong>Error</strong></td>
+<td><code>TARGET_LEVEL − waterLevel</code></td>
+</tr>
+<tr>
+<td><strong>Actuator</strong></td>
+<td>DC pump motor</td>
+</tr>
+<tr>
+<td><strong>Control action</strong></td>
+<td>ON/OFF (bang-bang)</td>
+</tr>
+<tr>
+<td><strong>Dead band</strong></td>
+<td><code>2 × HYSTERESIS</code></td>
+</tr>
+</tbody>
+</table>
+<p>The next step beyond bang-bang control is <strong>proportional control (P)</strong>, where the
+motor speed is proportional to the error — and beyond that, full <strong>PID control</strong>.</p>
+<h3 id="new-functions-introduced">New Functions Introduced<a class="headerlink" href="#new-functions-introduced" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Syntax</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pulseIn()</code></td>
+<td><code>pulseIn(pin, HIGH)</code></td>
+<td>Measure HIGH pulse duration in µs</td>
+</tr>
+<tr>
+<td><code>delayMicroseconds()</code></td>
+<td><code>delayMicroseconds(10)</code></td>
+<td>Pause for N microseconds</td>
+</tr>
+<tr>
+<td><code>analogWrite()</code></td>
+<td><code>analogWrite(pin, 0–255)</code></td>
+<td>Output PWM signal (motor speed / LED brightness)</td>
+</tr>
+<tr>
+<td><code>constrain()</code></td>
+<td><code>constrain(val, min, max)</code></td>
+<td>Clamp a value to [min, max]</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/tahafarshbaf/arduino_course" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
