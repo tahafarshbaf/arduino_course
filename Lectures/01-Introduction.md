@@ -21,6 +21,86 @@ There are various models of Arduino boards available on the market, but the most
 
 The heart of the Arduino Uno R3 DIP is the **ATmega328P** microcontroller. This is the chip that executes the program you write. The "DIP" (Dual In-line Package) designation means that the microcontroller is housed in a package with pins that can be inserted into a socket on the board. This is a key feature for beginners because if the chip gets damaged, it can be easily removed and replaced without needing to solder or buy a new board.
 
+Some key specs worth knowing up front, because they explain limits you'll
+run into later:
 
+| Spec | Value | Why it matters |
+|---|---|---|
+| Clock speed | 16 MHz | How many basic instructions per second the chip can run — plenty for these projects, but not for heavy math or video |
+| Flash memory | 32 KB | Where your compiled program is stored; a "sketch too big" error means you've filled this |
+| SRAM | 2 KB | Where variables live while the program runs; overflow this and behavior gets silently weird, not a clean error |
+| EEPROM | 1 KB | Small memory that **survives power loss** — used in Lecture 07 to remember settings after a reset |
+| Operating voltage | 5V | Every pin expects signals around 0V (LOW) or 5V (HIGH) |
 
+## The Board: Pinout
+
+```
+                    ┌─────────────────────────────┐
+             RESET →│ [ ]                     [ ] │→ 13
+                    │ [ ]  3V3                [ ] │→ 12
+                    │ [ ]  5V                 [ ]~│→ 11 (PWM)
+                    │ [ ]  GND               [ ]~ │→ 10 (PWM)
+                    │ [ ]  GND                [ ]~│→ 9  (PWM)
+                    │ [ ]  Vin                [ ] │→ 8
+                    │                              │
+             A0    →│ [ ]                     [ ] │→ 7
+             A1    →│ [ ]                    [ ]~ │→ 6  (PWM)
+             A2    →│ [ ]                    [ ]~ │→ 5  (PWM)
+             A3    →│ [ ]                     [ ] │→ 4
+             A4    →│ [ ]                    [ ]~ │→ 3  (PWM) / INT1
+             A5    →│ [ ]                     [ ] │→ 2  INT0
+                    │             [USB]      TX→[ ]│→ 1  (TX)
+                    │                        RX→[ ]│→ 0  (RX)
+                    └─────────────────────────────┘
+```
+
+| Pin group | Purpose |
+|---|---|
+| `0`–`13` | **Digital** I/O — read/write HIGH or LOW. Pins marked `~` (3, 5, 6, 9, 10, 11) also support `analogWrite()` (PWM — see Lecture 04) |
+| `A0`–`A5` | **Analog input** — read a continuous voltage with `analogRead()` (see Lecture 04); can also be used as extra digital pins |
+| `2`, `3` | Digital pins that double as **external interrupt** sources (`INT0`, `INT1`) — used in Lecture 09 |
+| `5V` / `3.3V` | Regulated power output for external components |
+| `GND` | Ground — the 0V reference every circuit needs, shared with any external power supply (see Lecture 00) |
+| `Vin` | Raw voltage input if powering the board from something other than USB (e.g. a 9V battery) |
+| `RESET` | Restarts the running program from `setup()` |
+| `0` (RX) / `1` (TX) | Serial communication pins — used internally by `Serial.print()` over USB; avoid using them for other components while also using Serial |
+
+## The Arduino IDE
+
+The **IDE** (Integrated Development Environment) is the program you write
+and upload code with.
+
+1. **Install** it from [arduino.cc/en/software](https://www.arduino.cc/en/software), or use the [Wokwi](https://wokwi.com/) online simulator to skip installation entirely for now.
+2. **Connect** the board via USB, then in the IDE go to `Tools → Board` and select **Arduino Uno**, and `Tools → Port` to select the port your board appears on.
+3. **Write** your code in the editor — every sketch needs exactly two functions:
+
+```cpp
+void setup() {
+  // runs once, when the board powers on or resets
+}
+
+void loop() {
+  // runs over and over, forever, after setup() finishes
+}
+```
+
+This `setup()` / `loop()` structure is doing the same job as the `main()`
+function from the [Pre-Course C primer](<../Pre-Course/01-C-Fundamentals-Primer.md>) —
+Arduino just splits it into "run once" and "run forever" for you, since
+that's the shape almost every embedded program takes.
+
+4. **Upload**: click the → (Upload) button. The IDE compiles your code and
+   sends it to the board over USB. Watch the small LEDs near the USB port
+   blink during the transfer — a bar at the bottom will confirm "Done
+   uploading."
+
+> [!NOTE]
+> If upload fails with a port or "not found" error, the two most common
+> causes are: the wrong board/port is selected under `Tools`, or another
+> program (like the Serial Monitor from a previous run) is still holding
+> the port open.
+
+Once you can get a sketch to compile and upload without errors, you're
+ready for [Lecture 03 - Blink](<./03-Blink.md>) — your first program that
+actually does something you can see.
 

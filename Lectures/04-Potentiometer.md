@@ -291,6 +291,50 @@ The only difference is the complexity of the sensor and actuator.
 
 ---
 
+## 8.5 The Trick: Smoothing a Noisy Reading
+
+Plug a real potentiometer into a real breadboard and watch its raw
+`analogRead()` values on the Serial Monitor — even holding the knob
+perfectly still, you'll see it jitter by a few counts (`512`, `514`,
+`511`, `513`...). This comes from electrical noise on the wiring and
+from the ADC itself. On an LED it's invisible, but the moment you use
+that value for something precise — like a displayed number, or the
+speed limit in Lecture 09 — the jitter becomes an annoying flicker.
+
+The fix is a **moving average**: keep the last few readings and use their
+average instead of any single one.
+
+```cpp
+const int NUM_READINGS = 10;
+int readings[NUM_READINGS];   // circular buffer of past readings
+int readIndex = 0;
+int total = 0;                // running sum of the buffer
+
+void setup() {
+  for (int i = 0; i < NUM_READINGS; i++) {
+    readings[i] = 0;
+  }
+}
+
+int smoothedRead(int pin) {
+  total -= readings[readIndex];          // remove the oldest reading from the sum
+  readings[readIndex] = analogRead(pin); // take a new reading
+  total += readings[readIndex];          // add it to the sum
+  readIndex = (readIndex + 1) % NUM_READINGS;  // move to the next slot, wrapping around
+
+  return total / NUM_READINGS;           // the average
+}
+```
+
+Every call to `smoothedRead()` replaces the oldest of the last 10 readings
+with a fresh one and returns the average of all 10 — so the result follows
+real changes (turning the knob) but ignores single noisy spikes. This
+exact circular-buffer pattern reappears in Exercise 2 of Lecture 09
+(Speed Measurement) for averaging speed readings.
+
+*Trade-off: a bigger `NUM_READINGS` gives a smoother value but reacts more
+slowly to real changes — there's no free lunch, only a dial to tune.*
+
 ## 9. Exercises & Challenges
 
 ### Exercise 1 — Reverse Control ⭐⭐

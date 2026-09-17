@@ -16,6 +16,7 @@ DOCS.mkdir()
 
 shutil.copyfile(ROOT / "README.md", DOCS / "index.md")
 shutil.copytree(ROOT / "Lectures", DOCS / "Lectures")
+shutil.copytree(ROOT / "Pre-Course", DOCS / "Pre-Course")
 shutil.copyfile(ROOT / "LICENSE", DOCS / "LICENSE")
 
 print(f"docs/ assembled at {DOCS}")

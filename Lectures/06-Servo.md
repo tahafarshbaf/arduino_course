@@ -265,6 +265,38 @@ Try `delay(5)` for a fast sweep or `delay(50)` for a very slow sweep.
 
 ---
 
+## 7.5 The Trick: Smooth (Eased) Motion
+
+A basic sweep moves the servo through every angle with the **same delay**
+per step, which looks mechanical — constant speed all the way. Real
+motion (and a much nicer-looking sweep) speeds up in the middle and slows
+down near the ends. This is called **easing**, and the trick is simple:
+make the delay depend on *how far the current angle is from the center*
+of the motion, instead of using a fixed value.
+
+```cpp
+void moveToSmooth(Servo &servo, int fromAngle, int toAngle) {
+  int step = (toAngle > fromAngle) ? 1 : -1;
+  int totalDistance = abs(toAngle - fromAngle);
+
+  for (int angle = fromAngle; angle != toAngle; angle += step) {
+    servo.write(angle);
+
+    int distanceFromCenter = abs(angle - (fromAngle + toAngle) / 2);
+    int delayMs = map(distanceFromCenter, 0, totalDistance / 2, 5, 25);
+    // near the center (distanceFromCenter ≈ 0) → delayMs ≈ 5  → fast
+    // near either end (distanceFromCenter large) → delayMs ≈ 25 → slow
+
+    delay(delayMs);
+  }
+}
+```
+
+The only new idea is reusing `map()` (from Lecture 04) on a *delay value*
+instead of a sensor reading — it works exactly the same way, just applied
+to timing instead of brightness. This is the building block the Pendulum
+exercise below asks you to extend into full acceleration/deceleration.
+
 ## 8. Exercises & Challenges
 
 

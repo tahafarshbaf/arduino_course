@@ -10,7 +10,12 @@ site_dir: site
 
 nav:
   - Home: index.md
+  - Pre-Course:
+      - Welcome: Pre-Course/00-Welcome.md
+      - C Fundamentals Primer: Pre-Course/01-C-Fundamentals-Primer.md
+      - Practice Problems: Pre-Course/02-Practice-Problems.md
   - Lectures:
+      - Electronics Fundamentals: Lectures/00-Electronics Fundamentals.md
       - Introduction: Lectures/01-Introduction.md
       - C Overview: Lectures/02-C Overview.md
       - Blink: Lectures/03-Blink.md
@@ -20,6 +25,10 @@ nav:
       - Security System: Lectures/07-Security System.md
       - Tank Level Control: Lectures/08-Tank Level Control.md
       - Speed Measurement: Lectures/09-SpeedMeasurement.md
+      - DC Motor Driver: Lectures/10-DC-Motor-Driver.md
+      - DHT11 Temperature & Humidity: Lectures/11-DHT11-Temperature-Humidity.md
+      - Wireless Communication: Lectures/12-Wireless-Communication.md
+      - Capstone Project: Lectures/13-Capstone-Project.md
       - References: Lectures/Refrences.md
 
 theme:

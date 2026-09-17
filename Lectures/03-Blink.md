@@ -195,7 +195,56 @@ Program starts
                      └──────────────────────────▶ (repeats)
 ```
 
-## 8. Exercises & Challenges
+## 8. The Trick: Blinking Without `delay()`
+
+`delay(1000)` doesn't just wait — it **freezes the entire program** for
+that second. Nothing else can happen: no button can be checked, no sensor
+read, no second LED pattern run. In every later project where you're
+juggling a sensor, an LCD, and an LED at once, `delay()` becomes a
+liability instead of a convenience.
+
+The fix is to track time yourself using `millis()`, which returns the
+number of milliseconds since the board powered on, and never blocks:
+
+```cpp
+const int LED_PIN = 13;
+const unsigned long INTERVAL = 1000;   // 1 second
+
+unsigned long previousMillis = 0;
+bool ledState = LOW;
+
+void setup() {
+  pinMode(LED_PIN, OUTPUT);
+}
+
+void loop() {
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= INTERVAL) {
+    previousMillis = currentMillis;      // remember when we last toggled
+    ledState = !ledState;                // flip ON/OFF
+    digitalWrite(LED_PIN, ledState);
+  }
+
+  // loop() keeps running immediately — you could add more code here
+  // (read a button, check a sensor...) and it would never be delayed.
+}
+```
+
+The pattern is always the same: remember `millis()` at the last event,
+and on every pass through `loop()` just check whether *enough time has
+passed since then* — never sleep. You'll see this exact pattern again in
+Lecture 08 (Tank Level Control) and Lecture 09 (Speed Measurement), where
+`delay()` would actually make the projects fail to respond in time.
+
+> [!NOTE]
+> `previousMillis` and `currentMillis` are `unsigned long`, not `int`.
+> `millis()` overflows back to 0 after about 50 days — using unsigned
+> subtraction (`currentMillis - previousMillis`) happens to still give the
+> correct elapsed time even across that overflow, which is exactly why
+> this pattern (and not a `>` comparison) is the standard one.
+
+## 9. Exercises & Challenges
 
 
 
@@ -228,3 +277,15 @@ Program them so they alternate — when one is ON, the other is OFF.
 
 A real heartbeat has two quick beats followed by a pause.  
 Program the LED to simulate: flash, flash, long pause, flash, flash, long pause, ...
+
+---
+
+### Exercise 4 — Rewrite with `millis()` ⭐⭐
+
+Take your solution to Exercise 2 (Two LEDs) and rewrite it using the
+`millis()` pattern from Section 8 instead of `delay()`, so both LEDs blink
+at **different, independent intervals** (e.g. one every 500 ms, the other
+every 700 ms) without interfering with each other.
+
+*Hint: you'll need two separate `previousMillis` variables — one per LED
+— since each blinks on its own schedule.*
